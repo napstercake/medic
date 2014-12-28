@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<pacientes>
+    <paciente>
+        <codigo>1</codigo>
+        <nrohistoria>001</nrohistoria>
+        <nombre>Luis Ricardo2</nombre>
+        <apellido>Gonzales Gmail</apellido>
+        <direccion>Av. Los Alamos 234 - San Isidro</direccion>
+        <correo>ricardo.01010@gmail.com</correo>
+        <celular>999999999</celular>
+        <fijo>3333333</fijo>
+        <fechaNacimiento>23/09/1984</fechaNacimiento>
+        <edad>30</edad>
+        <peso>60.0</peso> 
+        <talla>1.68</talla>
+    </paciente>
+    <paciente>
+        <codigo>2</codigo>
+        <nrohistoria>002</nrohistoria>
+        <nombre>Jose Ricardo</nombre>
+        <apellido>Gonzales Hotmail</apellido>
+        <direccion>Av. Los Laureles 999 - Miraflores</direccion>
+        <correo>ricardo.01010@hotmail.com</correo>
+        <celular>936733736</celular>
+        <fijo>3324244</fijo>
+        <fechaNacimiento>23/09/1984</fechaNacimiento>
+        <edad>31</edad>
+        <peso>66</peso> 
+        <talla>1.98</talla>
+    </paciente>
+    <paciente>
+        <codigo>3</codigo>
+        <nrohistoria>003</nrohistoria>
+        <nombre>Jaime Ricardo</nombre>
+        <apellido>Gonzales iCloud</apellido>
+        <direccion>Av. Los alamos 234 - San Juan de Miraflores</direccion>
+        <correo>ricardo.gonzales.b@icloud.com</correo>
+        <celular>909655423</celular>
+        <fijo>3322223</fijo>
+        <fechaNacimiento>23/09/1984</fechaNacimiento>
+        <edad>30</edad>
+        <peso>120.0</peso> 
+        <talla>1.88</talla>
+    </paciente>
+</pacientes>

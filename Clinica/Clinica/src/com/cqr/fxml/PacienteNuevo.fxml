@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.cqr.controller.PacienteNuevoController">
+  <children>
+    <Pane fx:id="headertitle" layoutX="0.0" layoutY="0.0" prefHeight="40.0" prefWidth="800.0">
+      <stylesheets>
+        <URL value="@/com/cqr/style/style.css" />
+      </stylesheets>
+    </Pane>
+    <Label layoutX="14.0" layoutY="14.0" text="REGISTRO DE NUEVO PACIENTE" textFill="WHITE" />
+    <TextField fx:id="txtNombre" layoutY="117.0" prefWidth="300.0" AnchorPane.leftAnchor="196.0" />
+    <TextField fx:id="txtApellido" layoutX="196.0" layoutY="154.0" prefWidth="300.0" />
+    <TextField fx:id="txtDireccion" layoutX="197.0" layoutY="191.0" prefWidth="300.0" />
+    <TextField fx:id="txtCorreo" layoutX="197.0" layoutY="230.0" prefWidth="300.0" />
+    <TextField fx:id="txtCelular" layoutX="197.0" layoutY="268.0" prefWidth="204.0" />
+    <TextField fx:id="txtFijo" layoutX="196.0" layoutY="305.0" prefWidth="204.0" />
+    <TextField fx:id="txtFecNac" layoutX="196.0" layoutY="340.0" prefWidth="204.0" />
+    <TextField fx:id="txtEdad" layoutX="196.0" layoutY="378.0" prefWidth="204.0" />
+    <TextField fx:id="txtPeso" layoutX="196.0" layoutY="416.0" prefWidth="204.0" />
+    <TextField fx:id="txtTalla" layoutX="196.0" layoutY="453.0" prefWidth="204.0" />
+    <Label layoutX="40.0" layoutY="120.0" text="Nombre:" />
+    <Label layoutX="40.0" layoutY="157.0" text="Apellido:" />
+    <Label layoutX="41.0" layoutY="194.0" text="Direccion:" />
+    <Label layoutX="41.0" layoutY="233.0" text="Correo:" />
+    <Label layoutX="41.0" layoutY="271.0" text="Telefono Celular:" />
+    <Label layoutX="40.0" layoutY="308.0" text="Telefono Fijo:" />
+    <Label layoutX="40.0" layoutY="343.0" text="Fecha de Nacimiento:" />
+    <Label layoutX="40.0" layoutY="381.0" text="Edad:" />
+    <Label layoutX="40.0" layoutY="419.0" text="Peso:" />
+    <Label layoutX="40.0" layoutY="456.0" text="Talla:" />
+    <Button fx:id="btnGuardarPaciente" layoutX="636.0" layoutY="565.0" mnemonicParsing="false" onAction="#guardarPaciente" text="GUARDAR PACIENTE" />
+    <Button fx:id="btnRegresar" layoutX="541.0" layoutY="566.0" mnemonicParsing="false" onAction="#backToPaciente" text="Regresar" />
+    <Label layoutX="40.0" layoutY="568.0" text="* Datos obligatorios" textFill="RED">
+      <font>
+        <Font size="12.0" />
+      </font>
+    </Label>
+    <Label layoutX="496.0" layoutY="117.0" text="*" textFill="RED">
+      <font>
+        <Font size="16.0" fx:id="x1" />
+      </font>
+    </Label>
+    <Label font="$x1" layoutX="496.0" layoutY="154.0" text="*" textFill="RED" />
+    <Label font="$x1" layoutX="401.0" layoutY="378.0" text="*" textFill="RED" />
+    <Label fx:id="lblInstruccion" layoutX="40.0" layoutY="67.0" style="&#10;" text="Completa el formulario para crear un nuevo paciente" textFill="#606060" />
+    <Label layoutX="565.0" layoutY="119.0" text="NRO. HISTORIA:" />
+    <TextField fx:id="txtNrohistoria" layoutX="675.0" layoutY="117.0" prefWidth="96.0" />
+    <Label font="$x1" layoutX="773.0" layoutY="117.0" text="*" textFill="RED" />
+  </children>
+  <stylesheets>
+    <URL value="@/com/cqr/style/style.css" />
+  </stylesheets>
+</AnchorPane>

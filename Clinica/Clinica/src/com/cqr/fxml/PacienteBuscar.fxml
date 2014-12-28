@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.cqr.controller.PacienteBuscarController">
+  <children>
+    <SplitPane fx:id="splitPane" dividerPositions="0.6131805157593123" focusTraversable="true" layoutX="0.0" layoutY="0.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="1024.0">
+      <items>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="234.0" prefWidth="1024.0">
+          <children>
+            <Label layoutX="14.0" layoutY="66.0" text="Ingrese apellido del paciente:" />
+            <TextField fx:id="txtBuscar" layoutX="217.0" layoutY="57.0" prefHeight="36.0" prefWidth="791.0" />
+            <Pane fx:id="headertitle" layoutX="0.0" layoutY="0.0" prefHeight="40.0" prefWidth="1024.0">
+              <children>
+                <Label layoutX="13.0" layoutY="12.0" text="BUSQUEDA DE PACIENTES" textFill="WHITE" />
+              </children>
+            </Pane>
+            <TableView fx:id="tableListadoPaciente2" layoutX="14.0" layoutY="101.0" prefHeight="310.0" prefWidth="994.0">
+              <columns>
+                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="97.0" text="Nro Historia" fx:id="clnNrohistoria" />
+                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="179.0" text="Nombres" fx:id="clnNombre" />
+                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="181.0" text="Apellidos" fx:id="clnApellido" />
+                <TableColumn prefWidth="75.0" text="Direccion" fx:id="clnDireccion" />
+                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="141.0" text="Correo" fx:id="clnCorreo" />
+                <TableColumn prefWidth="75.0" text="Celular" fx:id="clnCelular" />
+                <TableColumn prefWidth="75.0" text="Fijo" fx:id="clnFijo" />
+                <TableColumn prefWidth="75.0" text="Fec. Nacimiento" fx:id="clnFecNac" />
+                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="45.0" text="Edad" fx:id="clnEdad" />
+                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="45.0" text="Peso" fx:id="clnPeso" />
+                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="45.0" text="Talla" fx:id="clnTalla" />
+              </columns>
+            </TableView>
+          </children>
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="242.0" prefWidth="796.0">
+          <children>
+            <Label layoutX="20.0" layoutY="58.0" text="Nombres:" />
+            <Label layoutX="20.0" layoutY="86.0" text="Apellidos:" />
+            <Label layoutX="20.0" layoutY="115.0" text="Direccion:" />
+            <Label layoutX="20.0" layoutY="145.0" text="Correo:" />
+            <TextField fx:id="txtNombre" layoutX="165.0" layoutY="55.0" prefWidth="281.0" />
+            <TextField id="txtApellidos" fx:id="txtApellido" layoutX="165.0" layoutY="83.0" prefWidth="281.0" />
+            <TextField fx:id="txtDireccion" layoutX="165.0" layoutY="112.0" prefWidth="281.0" />
+            <TextField fx:id="txtCorreo" layoutX="165.0" layoutY="142.0" prefWidth="281.0" />
+            <Label layoutX="503.0" layoutY="58.0" text="Telefono celular:" />
+            <TextField fx:id="txtCelular" layoutY="55.0" prefWidth="121.0" AnchorPane.leftAnchor="637.0" />
+            <TextField fx:id="txtTelefonoFijo" layoutY="83.0" prefWidth="121.0" AnchorPane.leftAnchor="637.0" />
+            <Label layoutX="503.0" layoutY="86.0" text="Telefono fijo:" />
+            <Label layoutX="20.0" layoutY="174.0" text="Fecha de Nacimiento:" />
+            <Label layoutX="503.0" layoutY="115.0" text="Edad:" />
+            <Label layoutX="503.0" layoutY="145.0" text="Peso:" />
+            <Label layoutX="503.0" layoutY="171.0" text="Talla:" />
+            <TextField fx:id="txtEdad" layoutY="112.0" prefWidth="121.0" promptText="" AnchorPane.leftAnchor="637.0" />
+            <TextField fx:id="txtPeso" layoutX="637.0" layoutY="142.0" prefWidth="121.0" promptText="" />
+            <TextField fx:id="txtTalla" layoutX="637.0" layoutY="171.0" prefWidth="121.0" promptText="" />
+            <TextField fx:id="txtFechaNacimiento" layoutY="171.0" prefWidth="210.0" AnchorPane.leftAnchor="165.0" />
+            <Button fx:id="btnGuardarPaciente" layoutX="842.0" layoutY="231.0" mnemonicParsing="false" onAction="#guardarPaciente" prefWidth="162.0" text="GUARDAR CAMBIOS" />
+            <Button fx:id="btnRegresar" layoutX="755.0" layoutY="231.0" mnemonicParsing="false" onAction="#backToPaciente" text="Regresar" />
+            <Separator layoutX="0.0" layoutY="216.0" prefWidth="1024.0" />
+            <Label layoutX="18.0" layoutY="22.0" text="PACIENTE" textFill="#606060">
+              <font>
+                <Font size="14.0" />
+              </font>
+            </Label>
+            <Label layoutX="448.0" layoutY="84.0" text="*" textFill="RED">
+              <font>
+                <Font size="16.0" fx:id="x1" />
+              </font>
+            </Label>
+            <Label font="$x1" layoutX="448.0" layoutY="55.0" text="*" textFill="RED" />
+            <Label font="$x1" layoutX="759.0" layoutY="112.0" text="*" textFill="RED" />
+            <Label layoutX="18.0" layoutY="235.0" text="* Datos obligatorios" textFill="RED">
+              <font>
+                <Font size="12.0" />
+              </font>
+            </Label>
+            <Label layoutX="816.0" layoutY="58.0" text="Nro. Historia" />
+            <TextField fx:id="txtNrohistoria" layoutX="907.0" layoutY="55.0" prefWidth="97.0" />
+            <Label font="$x1" layoutX="1005.0" layoutY="55.0" text="*" textFill="RED" />
+          </children>
+        </AnchorPane>
+      </items>
+    </SplitPane>
+  </children>
+  <stylesheets>
+    <URL value="@/com/cqr/style/style.css" />
+  </stylesheets>
+</AnchorPane>

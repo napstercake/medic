@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="900.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.cqr.controller.EmailingPacSelecController">
+  <children>
+    <Pane fx:id="headertitle" layoutX="0.0" layoutY="0.0" prefHeight="40.0" prefWidth="900.0">
+      <children>
+        <Label layoutX="14.0" layoutY="14.0" text="ENVIAR EMAIL" textFill="WHITE" />
+      </children>
+    </Pane>
+    <TextField fx:id="txtPara" layoutX="14.0" layoutY="78.0" prefHeight="40.0" prefWidth="274.0" />
+    <TableView fx:id="tblCorreos" layoutX="322.0" layoutY="78.0" prefHeight="200.0" prefWidth="564.0">
+      <columns>
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="208.0" text="Paciente" fx:id="clnPaciente" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="353.0" text="Correo" fx:id="clnCorreo" />
+      </columns>
+    </TableView>
+    <Label layoutX="14.0" layoutY="51.0" text="Para:" />
+    <Label layoutX="322.0" layoutY="51.0" text="Selecciona el correo del paciente:" />
+    <Separator layoutX="0.0" layoutY="292.0" prefWidth="900.0" />
+    <TextField fx:id="txtEnviar" layoutX="89.0" layoutY="308.0" prefHeight="40.0" prefWidth="797.0" />
+    <Label layoutX="14.0" layoutY="320.0" text="Enviar a:" />
+    <TextArea fx:id="taMensaje" layoutX="89.0" layoutY="416.0" prefHeight="233.0" prefWidth="797.0" wrapText="true" />
+    <TextField fx:id="txtAsunto" layoutX="89.0" layoutY="360.0" prefHeight="40.0" prefWidth="797.0" />
+    <Label layoutX="14.0" layoutY="372.0" text="Asunto:">
+      <font>
+        <Font name="System Bold" size="13.0" fx:id="x1" />
+      </font>
+    </Label>
+    <Label font="$x1" layoutX="14.0" layoutY="419.0" text="Mensaje:" />
+    <Button fx:id="btnEnviarEmail" layoutX="775.0" layoutY="665.0" mnemonicParsing="false" onAction="#enviarEmailing" text="ENVIAR EMAIL" />
+    <Button fx:id="btnRegresar" layoutX="683.0" layoutY="665.0" mnemonicParsing="false" onAction="#regresarMain" text="Regresar" />
+  </children>
+  <stylesheets>
+    <URL value="@/com/cqr/style/style.css" />
+  </stylesheets>
+</AnchorPane>

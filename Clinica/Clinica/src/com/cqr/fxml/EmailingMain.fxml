@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPaneWhite" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.cqr.controller.EmailingMainController">
+  <children>
+    <ImageView fitHeight="112.18537902832031" fitWidth="355.0991724779801" layoutX="69.0" layoutY="244.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="@/com/cqr/style/logo.jpg" />
+      </image>
+    </ImageView>
+    <Button fx:id="btnEnviarATodos" layoutX="493.0" layoutY="269.0" mnemonicParsing="false" onAction="#enviarATodos" prefWidth="273.0" text="ENVIAR A TODOS" />
+    <Button fx:id="btnEnviarPacientesSeleccionados" layoutX="493.0" layoutY="310.0" mnemonicParsing="false" onAction="#enviarPacSeleccionados" prefWidth="273.0" text="ENVIAR A PACIENTES SELECCIONADOS" />
+    <Button fx:id="btnRegresar" layoutX="702.0" layoutY="559.0" mnemonicParsing="false" onAction="#regresarEmailing" text="Regresar" />
+  </children>
+  <stylesheets>
+    <URL value="@/com/cqr/style/style.css" />
+  </stylesheets>
+</AnchorPane>
