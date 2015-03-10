@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <citas>
     <cita>
-        <fecha>2014-12-28</fecha>
+        <fecha>2015-03-09</fecha>
         <codigo>1</codigo>
         <hora>06:00 PM</hora>
         <estado>P. Mantenimiento</estado>
@@ -9,7 +9,7 @@
         <codigopaciente>2</codigopaciente>
     </cita>
     <cita>
-        <fecha>2014-12-28</fecha>
+        <fecha>2015-03-09</fecha>
         <codigo>2</codigo>
         <hora>05:00 PM</hora>
         <estado>P. Nuevo</estado>
@@ -17,7 +17,7 @@
         <codigopaciente>3</codigopaciente>
     </cita>
     <cita>
-        <fecha>2014-12-28</fecha>
+        <fecha>2015-03-09</fecha>
         <codigo>3</codigo>
         <hora>11:15 AM</hora>
         <estado>P. Plan</estado>
@@ -25,7 +25,7 @@
         <codigopaciente>1</codigopaciente>
     </cita>
     <cita>
-        <fecha>2014-12-28</fecha>
+        <fecha>2015-03-08</fecha>
         <codigo>7</codigo>
         <hora>09:00 AM</hora>
         <estado>P. Plan</estado>
@@ -33,10 +33,26 @@
         <codigopaciente>1</codigopaciente>
     </cita>
     <cita>
-        <fecha>2014-12-28</fecha>
+        <fecha>2015-03-08</fecha>
         <codigo>8</codigo>
         <hora>09:00 AM</hora>
         <estado>P. Nuevo</estado>
+        <notas/>
+        <codigopaciente>2</codigopaciente>
+    </cita>
+<cita>
+        <fecha>2015-03-09</fecha>
+        <codigo>6</codigo>
+        <hora>11:15 AM</hora>
+        <estado>P. Mantenimiento</estado>
+        <notas/>
+        <codigopaciente>2</codigopaciente>
+    </cita>
+<cita>
+        <fecha>2015-03-09</fecha>
+        <codigo>7</codigo>
+        <hora>11:15 AM</hora>
+        <estado>P. Plan</estado>
         <notas/>
         <codigopaciente>2</codigopaciente>
     </cita>
