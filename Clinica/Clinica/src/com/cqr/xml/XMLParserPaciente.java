@@ -41,6 +41,8 @@ public class XMLParserPaciente implements IXMLParserPaciente {
     @Override
     public String getNamePacienteByCode (String pacienteCodigo) {
         
+        System.out.println("Paciente codigo: " + pacienteCodigo);
+        
         try {
             
             SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -49,6 +51,7 @@ public class XMLParserPaciente implements IXMLParserPaciente {
             DefaultHandler handler = new DefaultHandler() {
                 
                 boolean blnCodigo = false,
+                        blnHistoria = false,
                         blnNombre = false,
                         blnApellido = false,
                         blnGetName = false;
@@ -65,6 +68,7 @@ public class XMLParserPaciente implements IXMLParserPaciente {
                     Attributes attributes) throws SAXException {
                     
                     if (qName.equalsIgnoreCase("CODIGO")){blnCodigo = true;}
+                    if (qName.equalsIgnoreCase("NROHISTORIA")){blnHistoria = true;} //nrohistoria
                     if (qName.equalsIgnoreCase("NOMBRE")){blnNombre = true;}
                     if (qName.equalsIgnoreCase("APELLIDO")){blnApellido = true;}
                 }
@@ -97,21 +101,37 @@ public class XMLParserPaciente implements IXMLParserPaciente {
                             }
                             blnCodigo = false;
                         }
+                        
+                        if (blnHistoria) {
+                            if (blnGetName) {
+                                nombrePaciente = "(" + new String(ch, start, length) + ")";
+                                //nombrePaciente = "(" + new String(ch, start, length) + ")" + nombrePaciente;
+                                System.out.println("historia: " + nombrePaciente);
+                                //blnGetName = false;
+                            }
+                            blnHistoria = false;
+                            
+                        }
 
                         if (blnNombre) {
                             if (blnGetName) {
-                                nombrePaciente = new String(ch, start, length);
+                                nombrePaciente = nombrePaciente + " " + new String(ch, start, length);
+                                System.out.println("historia + nombre: " + nombrePaciente);
                             }
                             blnNombre = false;
                         }
                         
                         if (blnApellido) {
                             if (blnGetName) {
-                                nombrePaciente += " " + new String(ch, start, length);
+                                nombrePaciente = nombrePaciente + " " + new String(ch, start, length);
+                                System.out.println("historia + nombre + apellido: " + nombrePaciente);
                                 blnGetName = false;
                             }
                             blnApellido = false;
                         }
+                        
+                        
+                            
             }
         };
         
