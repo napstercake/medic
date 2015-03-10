@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This is a software created by me, If you have any question about this project
+ * just ask or make a pull request for this project.
+ * 
+ * @author Ricardo Gonzales [js.ricardo.gonzales@gmail.com]
  */
 
 package com.cqr.mail;
@@ -12,10 +13,11 @@ import javax.mail.internet.MimeMultipart;
 
 /**
  *
- * @author ricardogonzales
+ * @class This class is used to set all basic data for the email process.
  */
 public class BeanMail implements Serializable {
     
+    // Class variables.
     private int id = 0;
     private String usuario = "";
     private String password = "";
@@ -46,6 +48,8 @@ public class BeanMail implements Serializable {
         
     }
 
+    // Getters and setters.
+    
     public int getId() {
         return id;
     }
