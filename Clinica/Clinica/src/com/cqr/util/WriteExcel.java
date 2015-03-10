@@ -1,3 +1,10 @@
+/**
+ * This is a software created by me, If you have any question about this project
+ * just ask or make a pull request for this project.
+ * 
+ * @author Ricardo Gonzales [js.ricardo.gonzales@gmail.com]
+ */
+
 package com.cqr.util;
 
 import com.cqr.bean.PacienteBean;
@@ -20,25 +27,43 @@ import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
 /**
- *
- * @author ricardogonzales
+ * Write Excel class.
+ * 
+ * @class This class is used to write and excel document.
  */
 public class WriteExcel {
     
+    // Class variables.
     private WritableCellFormat timesBoldUnderline;
     private WritableCellFormat times;
     private String inputFile;
-    
     List<PacienteBean> arregloPacientes = new ArrayList();
     
+    /**
+     * Write excel.
+     * 
+     * @param arregloPacientes 
+     */
     public WriteExcel(List<PacienteBean> arregloPacientes) {
         this.arregloPacientes = arregloPacientes;
     }
     
+    /**
+     * Set output file.
+     * 
+     * @param inputFile 
+     */
     public void setOutputFile(String inputFile) {
         this.inputFile = inputFile;
     }
 
+    /**
+     * Write Excel file.
+     * 
+     * @return boolean
+     * @throws IOException
+     * @throws WriteException 
+     */
     public boolean write() throws IOException, WriteException {
         
         boolean blnResultado = false;
@@ -70,6 +95,12 @@ public class WriteExcel {
         
     }
 
+    /**
+     * Create label.
+     * 
+     * @param sheet
+     * @throws WriteException 
+     */
     private void createLabel(WritableSheet sheet)
       throws WriteException {
         
@@ -80,7 +111,7 @@ public class WriteExcel {
         // Lets automatically wrap the cells
         times.setWrap(true);
 
-        // create create a bold font with unterlines
+        // Create create a bold font with unterlines
         WritableFont times10ptBoldUnderline = new WritableFont(WritableFont.TIMES, 10, WritableFont.BOLD, false,
             UnderlineStyle.SINGLE);
         timesBoldUnderline = new WritableCellFormat(times10ptBoldUnderline);
@@ -108,6 +139,13 @@ public class WriteExcel {
        
     }
 
+    /**
+     * Create content.
+     * 
+     * @param sheet
+     * @throws WriteException
+     * @throws RowsExceededException 
+     */
     private void createContent(WritableSheet sheet) throws WriteException,
       RowsExceededException {
         
@@ -128,6 +166,16 @@ public class WriteExcel {
         }
     }
 
+    /**
+     * Add a caption.
+     * 
+     * @param sheet
+     * @param column
+     * @param row
+     * @param s
+     * @throws RowsExceededException
+     * @throws WriteException 
+     */
     private void addCaption(WritableSheet sheet, int column, int row, String s)
         throws RowsExceededException, WriteException {
         
@@ -136,6 +184,16 @@ public class WriteExcel {
         sheet.addCell(label);
     }
 
+    /**
+     * Add a number.
+     * 
+     * @param sheet
+     * @param column
+     * @param row
+     * @param integer
+     * @throws WriteException
+     * @throws RowsExceededException 
+     */
     private void addNumber(WritableSheet sheet, int column, int row,
         Integer integer) throws WriteException, RowsExceededException {
         
@@ -144,6 +202,16 @@ public class WriteExcel {
         sheet.addCell(number);
     }
 
+    /**
+     * Add label.
+     * 
+     * @param sheet
+     * @param column
+     * @param row
+     * @param s
+     * @throws WriteException
+     * @throws RowsExceededException 
+     */
     private void addLabel(WritableSheet sheet, int column, int row, String s)
         throws WriteException, RowsExceededException {
         
