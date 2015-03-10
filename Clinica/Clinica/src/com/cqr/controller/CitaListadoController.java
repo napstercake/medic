@@ -212,7 +212,7 @@ public class CitaListadoController implements Initializable {
         PageFormat pf0 = printJob.defaultPage();
         PageFormat pf1 = (PageFormat) pf0.clone();
         Paper p = pf0.getPaper();
-        p.setImageableArea(1, 1, pf0.getWidth(), pf0.getHeight());
+        p.setImageableArea(5, 1, pf0.getWidth(), pf0.getHeight());//1,1,pF..., pf0...
         pf1.setPaper(p);
         PageFormat pf2 = printJob.validatePage(pf1);
         return pf2;
@@ -246,9 +246,9 @@ public class CitaListadoController implements Initializable {
             int starColumn = 0;
             int starRow = 10;
             
-            int columnWidth = 40;
+            int columnWidth = 50;//40
             int rowsCount = 39;
-            int colsCount = 4;
+            int colsCount = 3;//4
             int rowsHeigth = 16;
             
             Double doubleValue = (pageFormat.getImageableWidth() - columnWidth) / colsCount;
@@ -284,11 +284,11 @@ public class CitaListadoController implements Initializable {
                             txtHeader = "Hora";
                             
                         } else if (iCol == 1) {
-                            starColumn = 40;
+                            starColumn = 50;//40
                             
-                            // Printing name and lastname;
+                            // Printing (history) name and lastname;
                             columnWidth = calcColumn;
-                            txtHeader = "Nombre y Apellido";
+                            txtHeader = "(Historia) Nombre y Apellido";
                             
                         } else {
                             
@@ -322,7 +322,7 @@ public class CitaListadoController implements Initializable {
                         } else { 
                             
                             if (iCol==1) {
-                                starColumn = 40;
+                                starColumn = 50;//40
                             } else {
                                 starColumn += calcColumn;
                             }
@@ -366,7 +366,7 @@ public class CitaListadoController implements Initializable {
                 // Print horizontal lines.
                 g2d.drawLine(1, 
                         (rowsHeigth + ( (rowsHeigth)*iRow) ), 
-                        (40 + (calcColumn*4)), 
+                        (50 + (calcColumn*3)), //40
                         (rowsHeigth + ((rowsHeigth)*iRow)));
             }
             return (PAGE_EXISTS);
