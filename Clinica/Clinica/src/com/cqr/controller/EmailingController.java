@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This is a software created by me, If you have any question about this project
+ * just ask or make a pull request for this project.
+ * 
+ * @author Ricardo Gonzales [js.ricardo.gonzales@gmail.com]
  */
 
 package com.cqr.controller;
@@ -35,6 +36,7 @@ import org.controlsfx.dialog.Dialogs;
  */
 public class EmailingController implements Initializable {
     
+    // FXML Variables.
     @FXML private TextField txtTituloCorreo;
     @FXML private TextArea taMensajeCorreo;
     @FXML private Button btnEnviar;
@@ -42,6 +44,14 @@ public class EmailingController implements Initializable {
     
     private static UtilEmail utilEmail = new UtilEmail();
     
+    // FXML Methods.
+    
+    /**
+     * Return to 
+     * 
+     * @param evento
+     * @throws IOException 
+     */
     @FXML
     private void regresarClinica(ActionEvent evento) throws IOException {
         Node node=(Node) evento.getSource();
@@ -52,13 +62,19 @@ public class EmailingController implements Initializable {
         stage.show();
     }
    
+    /**
+     * Send e-mail.
+     * 
+     * @param evento 
+     */
     @FXML
     private void enviarEmailing(ActionEvent evento) {
         
-        System.out.println("Enviar emailing!");
+        // Set items behavior.
         btnEnviar.setDisable(true);
         btnRegresar.setDisable(true);
         
+        // Validates empty fields.
         if (txtTituloCorreo.getText().trim().equalsIgnoreCase("") ||
                taMensajeCorreo.getText().trim().equalsIgnoreCase("") ) {
             
@@ -73,13 +89,13 @@ public class EmailingController implements Initializable {
             IXMLParserPaciente xmlParser = new XMLParserPaciente();
             List<String> emailList = xmlParser.getPacientesEmail();
             
+            // Check if the email list is empty.
             if (!emailList.isEmpty()) {
                 
-                /**
-                * Enviar email.
-                */
+                // Send email.
                 BeanMail beanMail = new BeanMail();
 
+                // Set mandatories values for emaling process.
                 beanMail.setUsuario(Constants.SENDER_EMAIL);
                 beanMail.setPassword(Constants.SENDER_PWD);
                 beanMail.setServidor(Constants.SERVER_GMAIL);
@@ -96,9 +112,11 @@ public class EmailingController implements Initializable {
                 beanMail.setAsuntoMensaje(txtTituloCorreo.getText());
                 beanMail.setCuerpoMensaje(taMensajeCorreo.getText());
                 beanMail.setCopia(1);
-
+                
+                // Validate if email was succesfully sended.
                 if (utilEmail.enviarEmailHtmlAdjunto(beanMail, true, emailList)) {
                     
+                    // Show succesfully message.
                     Dialogs.create().owner(null)
                     .title("Emailing")
                     .masthead(null)
@@ -107,6 +125,7 @@ public class EmailingController implements Initializable {
                     
                 } else {
                     
+                    // Show error message.
                     Dialogs.create().owner(null)
                     .title("Error al enviar.")
                     .masthead(null)
@@ -115,13 +134,13 @@ public class EmailingController implements Initializable {
                     
                 }
                 
-                
-                
+                // Cleaning up the textfields.
                 txtTituloCorreo.setText("");
                 taMensajeCorreo.setText(""); 
 
             } else {
                 
+                // Show for incomplete data.
                 Dialogs.create().owner(null)
                     .title("Data incompleta.")
                     .masthead(null)
@@ -130,6 +149,7 @@ public class EmailingController implements Initializable {
             }
         }
         
+        // Set items behavior.
         btnEnviar.setDisable(false);
         btnRegresar.setDisable(false);
     }
@@ -139,7 +159,5 @@ public class EmailingController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
     }    
-    
 }
