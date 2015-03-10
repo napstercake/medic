@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This is a software created by me, If you have any question about this project
+ * just ask or make a pull request for this project.
+ * 
+ * @author Ricardo Gonzales [js.ricardo.gonzales@gmail.com]
  */
 
 package com.cqr.util;
@@ -16,8 +17,10 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 /**
- *
- * @author ricardogonzales
+ * Util Class.
+ * 
+ * @class This class contains general methods to help the application in some
+ * necessary validations.
  */
 public class Util {
     
@@ -45,6 +48,12 @@ public class Util {
         return true;
     }
     
+    /**
+     * Check is the email address is corrected
+     * 
+     * @param email
+     * @return boolean.
+     */
     public boolean isValidEmailAddress(String email) {
         boolean result = true;
         try {
@@ -58,7 +67,8 @@ public class Util {
     
     /**
      * 
-     * This is not working properly
+     * This is not working properly TODO
+     * 
      * @param source
      * @param dest
      * @throws IOException 
@@ -67,7 +77,4 @@ public class Util {
 		throws IOException {
         Files.copy(source.toPath(), dest.toPath());
     }
-    
-    
-    
 }
