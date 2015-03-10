@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This is a software created by me, If you have any question about this project
+ * just ask or make a pull request for this project.
+ * 
+ * @author Ricardo Gonzales [js.ricardo.gonzales@gmail.com]
  */
 
 package com.cqr.controller;
@@ -37,72 +38,32 @@ import org.controlsfx.dialog.Dialogs;
 /**
  * FXML Controller class
  *
- * @author ricardogonzales
+ * @class This class is used to store a record on XML from any reserved appointment.
  */
 public class ReservarCitaController implements Initializable {
     
-    @FXML private TextField txtBuscarPaciente;
     
+    // FXML variables.
+    @FXML private TextField txtBuscarPaciente;
     @FXML private TableView pacienteTable;
     @FXML private TableColumn clnNrohistoria;
     @FXML private TableColumn clnNombre;
     @FXML private TableColumn clnApellido;
     @FXML private TableColumn clnEdad;
-    
-    @FXML private Button btnRegresar;
     @FXML private Button btnRegistrarCita;
     
+    // Class variables
     private ObservableList filteredData = FXCollections.observableArrayList();
     private ObservableList<PacienteBean> masterData = FXCollections.observableArrayList();
-    
     private int posicionPacienteEnTabla;
-    
     private PacienteBean paciente; 
     public static String parameters = "hola";
     
-    @FXML
-    private void goToRegistrarCita(ActionEvent evento) throws IOException {
-        
-        // Si hay paciente seleccionado.
-        if (paciente.getCodigo() != 0) {
-            
-            Node node=(Node) evento.getSource();
-            Stage stage=(Stage) node.getScene().getWindow();
-            
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/cqr/fxml/Citas.fxml"));     
-            Parent root = (Parent)fxmlLoader.load();        
-            
-            CitasController citasController = fxmlLoader.<CitasController>getController();
-            //citasController.setPacienteBean(paciente);
-            citasController.initData(paciente);
-            
-            Scene scene = new Scene(root); 
-
-            stage.setScene(scene);    
-            stage.show(); 
-
-            
-        } else {
-            Dialogs.create().owner(null)
-                .title("Registro de citas.")
-                .masthead(null)
-                .message( "Debes seleccionar un paciente para registrar la cita.")
-                .showWarning();
-        }
-        
-    }
-    
-    @FXML
-    private void goToRegresar(ActionEvent evento) throws IOException {
-        Node node=(Node) evento.getSource();
-        Stage stage=(Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/com/cqr/fxml/Clinica.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-    
-    
+    /**
+     * Save a new appointment.
+     * This method will modify the XML file too.
+     * 
+     */
     public ReservarCitaController() {
         
         List<PacienteBean> arregloPacientes = new ArrayList();
@@ -127,6 +88,7 @@ public class ReservarCitaController implements Initializable {
             
             filteredData.addAll(masterData);
             
+            // Add a listener to the table.
             masterData.addListener(new ListChangeListener() {
                 
                 @Override
@@ -142,10 +104,11 @@ public class ReservarCitaController implements Initializable {
     }
     
     /**
-     * 
+     * Ini patient's table.
      */
     private void inicializarTablaPacientes() {
         
+        // Set value for columns in the table.
         clnNrohistoria.setCellValueFactory(new PropertyValueFactory("nrohistoria"));
         clnNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
         clnApellido.setCellValueFactory(new PropertyValueFactory("apellido"));
@@ -153,6 +116,7 @@ public class ReservarCitaController implements Initializable {
         
         pacienteTable.setItems(filteredData);
         
+        // Add a listener to the textfield that is used to search patients.
         txtBuscarPaciente.textProperty().addListener(new ChangeListener() {
 
             @Override
@@ -162,20 +126,30 @@ public class ReservarCitaController implements Initializable {
         });
     }
     
+    /**
+     * Ini
+     * 
+     * @param url
+     * @param rb 
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        // Set item behavior.
         btnRegistrarCita.setDisable(true);
         
+        // Ini table patients.
         this.inicializarTablaPacientes();
         
-        /* Agrega escuchador a la tabla. */
+        // Add listener to the table.
         final ObservableList<PacienteBean> tablePacienteSel = pacienteTable.getSelectionModel().getSelectedItems();
         tablePacienteSel.addListener(selectorTablePaciente);
         
     } 
     
-    /* Filtrar resultados ****************************************************/
+    /**
+     * Filter results.
+     */
     private void updateFilteredData() {
         filteredData.clear();
 
@@ -188,6 +162,12 @@ public class ReservarCitaController implements Initializable {
         reapplyTableSortOrder();
     }
     
+    /**
+     * Match input value.
+     * 
+     * @param person
+     * @return 
+     */
     private boolean matchesFilter(PacienteBean person) {
         String filterString = txtBuscarPaciente.getText();
         if (filterString == null || filterString.isEmpty()) {
@@ -205,22 +185,17 @@ public class ReservarCitaController implements Initializable {
         return false; // Does not match
     }
     
+    /**
+     * Reapply table sort order
+     */
     private void reapplyTableSortOrder() {
         pacienteTable.getSortOrder().addAll(clnNombre);
     }
-    /* Filtrar resultados ****************************************************/
     
-    
-    
-    
-     
-    
-    
-    
-    
-    
-    
-    
+    /**
+     * This is method is a listener that works when the user
+     * select any row on the table. 
+     */
     private final ListChangeListener<PacienteBean> selectorTablePaciente =
         new ListChangeListener<PacienteBean>() {
                
@@ -230,6 +205,11 @@ public class ReservarCitaController implements Initializable {
         }
     };
     
+    /**
+     * Get selected patient data.
+     * 
+     * @return 
+     */
     public PacienteBean getTablaPacienteSeleccionado() {
         
         if (pacienteTable != null) {
@@ -245,7 +225,9 @@ public class ReservarCitaController implements Initializable {
         return null;
     }
     
-    
+    /**
+     * Set selected patient data on textfields.
+     */
     private void ponerPacienteSeleccionado() {
         
         paciente = getTablaPacienteSeleccionado();
@@ -255,6 +237,58 @@ public class ReservarCitaController implements Initializable {
 
             btnRegistrarCita.setDisable(false);
         }
+    }
+    
+    // FXML methods.
+    
+    /**
+     * Go to add new appointment GUI.
+     * 
+     * @param evento
+     * @throws IOException 
+     */
+    @FXML
+    private void goToRegistrarCita(ActionEvent evento) throws IOException {
+        
+        // Check if there any selected patient.
+        if (paciente.getCodigo() != 0) {
+            
+            Node node=(Node) evento.getSource();
+            Stage stage=(Stage) node.getScene().getWindow();
+            
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/cqr/fxml/Citas.fxml"));     
+            Parent root = (Parent)fxmlLoader.load();        
+            
+            CitasController citasController = fxmlLoader.<CitasController>getController();
+            citasController.initData(paciente);
+            
+            Scene scene = new Scene(root); 
+            stage.setScene(scene);    
+            stage.show(); 
+
+        } else {
+            Dialogs.create().owner(null)
+                .title("Registro de citas.")
+                .masthead(null)
+                .message( "Debes seleccionar un paciente para registrar la cita.")
+                .showWarning();
+        }
+    }
+    
+    /**
+     * Return to main menu GUI.
+     * 
+     * @param evento
+     * @throws IOException 
+     */
+    @FXML
+    private void goToRegresar(ActionEvent evento) throws IOException {
+        Node node=(Node) evento.getSource();
+        Stage stage=(Stage) node.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/com/cqr/fxml/Clinica.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }
 
