@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This is a software created by me, If you have any question about this project
+ * just ask or make a pull request for this project.
+ * 
+ * @author Ricardo Gonzales [js.ricardo.gonzales@gmail.com]
  */
 
 package com.cqr.controller;
@@ -40,10 +41,11 @@ import org.controlsfx.dialog.Dialogs;
 /**
  * FXML Controller class
  *
- * @author ricardogonzales
+ * @class Search controller patients
  */
 public class PacienteBuscarController implements Initializable {
     
+    // FXML variables
     @FXML private TextField txtNrohistoria;
     @FXML private TextField txtNombre;
     @FXML private TextField txtApellido;
@@ -55,12 +57,8 @@ public class PacienteBuscarController implements Initializable {
     @FXML private TextField txtEdad;
     @FXML private TextField txtPeso;
     @FXML private TextField txtTalla;
-    
     @FXML private TextField txtBuscar;
-    
-    @FXML private Button btnRegresar;
     @FXML private Button btnGuardarPaciente;
-    
     @FXML private TableView tableListadoPaciente2;
     @FXML private TableColumn clnNrohistoria;
     @FXML private TableColumn clnNombre;
@@ -74,16 +72,22 @@ public class PacienteBuscarController implements Initializable {
     @FXML private TableColumn clnPeso;
     @FXML private TableColumn clnTalla;
     
+    // FXML class variables
     private ObservableList filteredData = FXCollections.observableArrayList();
     private ObservableList<PacienteBean> pacienteObservable = FXCollections.observableArrayList();
-    
     private int posicionPacienteEnTabla;
     private int codigoPacienteModificar;
     
+    /**
+     * Constructor
+     */
     public PacienteBuscarController() {
-        
     }
     
+    /**
+     * This is method is a listener that works when the user
+     * select any row on the table. 
+     */
     private final ListChangeListener<PacienteBean> selectorTablePaciente =
             new ListChangeListener<PacienteBean>() {
 
@@ -93,6 +97,9 @@ public class PacienteBuscarController implements Initializable {
         }
     };
     
+    /**
+     * Set selected patient data on textfields.
+     */
     private void ponerPacienteSeleccionado() {
         
         final PacienteBean pacienteBean = getTablaPacienteSeleccionado();
@@ -102,6 +109,7 @@ public class PacienteBuscarController implements Initializable {
             
             codigoPacienteModificar = pacienteBean.getCodigo();
             
+            // Set values into textfields.
             txtNrohistoria.setText(pacienteBean.getNrohistoria());
             txtNombre.setText(pacienteBean.getNombre());
             txtApellido.setText(pacienteBean.getApellido());
@@ -114,13 +122,18 @@ public class PacienteBuscarController implements Initializable {
             txtTalla.setText(pacienteBean.getTalla());
             txtFechaNacimiento.setText(pacienteBean.getFechaNacimiento());
                     
-            // Disable buttons
+            // Set items behavior.
             txtNombre.setDisable(false);txtApellido.setDisable(false);txtDireccion.setDisable(false);txtCorreo.setDisable(false);txtCelular.setDisable(false);txtTelefonoFijo.setDisable(false);txtFechaNacimiento.setDisable(false);txtEdad.setDisable(false);txtPeso.setDisable(false);txtTalla.setDisable(false);
             txtNrohistoria.setDisable(false);
             btnGuardarPaciente.setDisable(false);
         }
     }
     
+    /**
+     * Get selected patient data.
+     * 
+     * @return 
+     */
     public PacienteBean getTablaPacienteSeleccionado() {
         
         if (tableListadoPaciente2 != null) {
@@ -132,10 +145,12 @@ public class PacienteBuscarController implements Initializable {
                 return competicionSeleccionada;
             }
         }
-        
         return null;
     }
     
+    /**
+     * Ini patients table.
+     */
     private void inicializarTablaPaciente() {
         
         clnNrohistoria.setCellValueFactory(new PropertyValueFactory("nrohistoria"));
@@ -153,19 +168,29 @@ public class PacienteBuscarController implements Initializable {
         tableListadoPaciente2.setItems(filteredData);
         tableListadoPaciente2.setPlaceholder(new Label("No hay pacientes registrados"));
         
+        // Add listener to "Search" field.
         txtBuscar.textProperty().addListener(new ChangeListener() {
 
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 updateFilteredData();
             }
-            
         });
     }
     
+    // FXML Methods.
+    
+    /**
+     * Save patients.
+     * 
+     * @param evento
+     * @throws WriteException
+     * @throws IOException 
+     */
     @FXML
     private void guardarPaciente(ActionEvent evento) throws WriteException, IOException {
         
+        // Validates mandatories fields.
         if ( txtNombre.getText().equalsIgnoreCase("") ||
              txtApellido.getText().equalsIgnoreCase("") ||
              txtEdad.getText().equalsIgnoreCase("") ||
@@ -179,10 +204,12 @@ public class PacienteBuscarController implements Initializable {
             
         } else {
             
+            // If email data is empty.
             if (txtCorreo.getText().trim().equalsIgnoreCase("")) {
                 
                 PacienteBean paciente = new PacienteBean();
-            
+                
+                // Set values to patient' object.
                 paciente.setCodigo(codigoPacienteModificar);
                 paciente.setNrohistoria(txtNrohistoria.getText());
                 paciente.setNombre(txtNombre.getText().trim());
@@ -198,6 +225,7 @@ public class PacienteBuscarController implements Initializable {
 
                 IXMLParserPaciente xmlPPac = new XMLParserPaciente();
 
+                // Check if the update process was succesfully.
                 if (xmlPPac.updatePaciente(paciente)) {
 
                     Dialogs.create().owner(null)
@@ -223,6 +251,7 @@ public class PacienteBuscarController implements Initializable {
                 
             } else {
                 
+                // If email value is not empty.
                 Util util = new Util();
                 
                 if (util.isValidEmailAddress(txtCorreo.getText().trim())) {
@@ -243,7 +272,8 @@ public class PacienteBuscarController implements Initializable {
                     paciente.setTalla(txtTalla.getText().trim());
 
                     IXMLParserPaciente xmlPPac = new XMLParserPaciente();
-
+                    
+                    // Validate update process was succesfully done.
                     if (xmlPPac.updatePaciente(paciente)) {
 
                         Dialogs.create().owner(null)
@@ -279,6 +309,12 @@ public class PacienteBuscarController implements Initializable {
         }
     }
     
+    /**
+     * Return to main patient GUI.
+     * 
+     * @param evento
+     * @throws IOException 
+     */
     @FXML
     private void backToPaciente(ActionEvent evento) throws IOException {
         Node node=(Node) evento.getSource();
@@ -295,11 +331,34 @@ public class PacienteBuscarController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        // Ini table patients.
         this.inicializarTablaPaciente();
         
-        txtNombre.setText("");txtApellido.setText("");txtDireccion.setText("");txtCorreo.setText("");txtCelular.setText("");txtTelefonoFijo.setText("");txtFechaNacimiento.setText("");txtEdad.setText("");txtPeso.setText("");txtTalla.setText("");txtNrohistoria.setText("");
-        txtNombre.setDisable(true);txtApellido.setDisable(true);txtDireccion.setDisable(true);txtCorreo.setDisable(true);txtCelular.setDisable(true);txtTelefonoFijo.setDisable(true);txtFechaNacimiento.setDisable(true);txtEdad.setDisable(true);txtPeso.setDisable(true);txtTalla.setDisable(true);txtNrohistoria.setDisable(true);
+        // Clean textfields values.
+        txtNombre.setText("");
+        txtApellido.setText("");
+        txtDireccion.setText("");
+        txtCorreo.setText("");
+        txtCelular.setText("");
+        txtTelefonoFijo.setText("");
+        txtFechaNacimiento.setText("");
+        txtEdad.setText("");
+        txtPeso.setText("");
+        txtTalla.setText("");
+        txtNrohistoria.setText("");
         
+        // Set items behavior.
+        txtNombre.setDisable(true);
+        txtApellido.setDisable(true);
+        txtDireccion.setDisable(true);
+        txtCorreo.setDisable(true);
+        txtCelular.setDisable(true);
+        txtTelefonoFijo.setDisable(true);
+        txtFechaNacimiento.setDisable(true);
+        txtEdad.setDisable(true);
+        txtPeso.setDisable(true);
+        txtTalla.setDisable(true);
+        txtNrohistoria.setDisable(true);
         btnGuardarPaciente.setDisable(true);
         
         final ObservableList<PacienteBean> tablaPacienteSel = 
@@ -310,6 +369,7 @@ public class PacienteBuscarController implements Initializable {
         IXMLParserPaciente xmlParser = new XMLParserPaciente();
         
         try {
+            // Get all data from patients stored in xml document.
             arregloPacientes = xmlParser.readXMLPacientes();
             
             for (int i=0; i< arregloPacientes.size(); i++) {
@@ -332,22 +392,21 @@ public class PacienteBuscarController implements Initializable {
             
             filteredData.addAll(pacienteObservable);
             
+            // Add a listener to the patients table.
             pacienteObservable.addListener(new ListChangeListener() {
 
                 @Override
                 public void onChanged(ListChangeListener.Change c) {
                     updateFilteredData();
                 }
-                
             });
- 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     
     /**
-     * 
+     * Update filtered data.
      */
     private void updateFilteredData() {
         filteredData.clear();
@@ -361,6 +420,7 @@ public class PacienteBuscarController implements Initializable {
     }
     
     /**
+     * Match filters.
      * 
      * @param person
      * @return 
@@ -384,10 +444,9 @@ public class PacienteBuscarController implements Initializable {
     }
     
     /**
-     * 
+     * Order table.
      */
     private void reapplyTableSortOrder() {
         tableListadoPaciente2.getSortOrder().addAll(clnNombre);
     }
-    
 }
