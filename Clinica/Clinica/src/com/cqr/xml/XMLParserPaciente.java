@@ -42,8 +42,6 @@ public class XMLParserPaciente implements IXMLParserPaciente {
     @Override
     public String getNamePacienteByCode (String pacienteCodigo) {
         
-        System.out.println("Paciente codigo: " + pacienteCodigo);
-        
         try {
             
             SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -107,7 +105,6 @@ public class XMLParserPaciente implements IXMLParserPaciente {
                             if (blnGetName) {
                                 nombrePaciente = "(" + new String(ch, start, length) + ")";
                                 //nombrePaciente = "(" + new String(ch, start, length) + ")" + nombrePaciente;
-                                System.out.println("historia: " + nombrePaciente);
                                 //blnGetName = false;
                             }
                             blnHistoria = false;
@@ -117,7 +114,6 @@ public class XMLParserPaciente implements IXMLParserPaciente {
                         if (blnNombre) {
                             if (blnGetName) {
                                 nombrePaciente = nombrePaciente + " " + new String(ch, start, length);
-                                System.out.println("historia + nombre: " + nombrePaciente);
                             }
                             blnNombre = false;
                         }
@@ -125,7 +121,6 @@ public class XMLParserPaciente implements IXMLParserPaciente {
                         if (blnApellido) {
                             if (blnGetName) {
                                 nombrePaciente = nombrePaciente + " " + new String(ch, start, length);
-                                System.out.println("historia + nombre + apellido: " + nombrePaciente);
                                 blnGetName = false;
                             }
                             blnApellido = false;
@@ -172,7 +167,6 @@ public class XMLParserPaciente implements IXMLParserPaciente {
                  */
                 public void startElement(String uri, String localName,String qName, 
                     Attributes attributes) throws SAXException {
-                    
                     if (qName.equalsIgnoreCase("CORREO")){blnCorreo = true;}
                 }
             
