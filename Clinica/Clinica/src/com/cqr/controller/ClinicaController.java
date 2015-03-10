@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This is a software created by me, If you have any question about this project
+ * just ask or make a pull request for this project.
+ * 
+ * @author Ricardo Gonzales [js.ricardo.gonzales@gmail.com]
  */
 
 package com.cqr.controller;
@@ -22,15 +23,24 @@ import javafx.stage.Stage;
 import org.controlsfx.dialog.Dialogs;
 
 /**
- *
- * @author ricardogonzales
+ * 
+ * @class Controller with main options.
  */
 public class ClinicaController implements Initializable {
     
+    // FXML Variables.
     @FXML private Button btnCitas;
     @FXML private Button btnPacientes;
     @FXML private Button btnEmailing;
     
+    // FXML Methods.
+    
+    /**
+     * Show appointments.
+     * 
+     * @param evento
+     * @throws IOException 
+     */
     @FXML
     private void showCitas(ActionEvent evento) throws IOException {
         
@@ -40,8 +50,14 @@ public class ClinicaController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-       
     }
+    
+    /**
+     * Show patients list.
+     * 
+     * @param evento
+     * @throws IOException 
+     */
     @FXML
     private void showPacientes(ActionEvent evento) throws IOException {
         Node node=(Node) evento.getSource();
@@ -52,9 +68,17 @@ public class ClinicaController implements Initializable {
         stage.show();
         
     }
+    
+    /**
+     * Show emailing UI.
+     * 
+     * @param evento
+     * @throws IOException 
+     */
     @FXML
     private void showEmailing(ActionEvent evento) throws IOException {
         
+        // Check internet connection.
         if (Util.isInternetReachable()) {
             
             Node node=(Node) evento.getSource();
@@ -74,6 +98,12 @@ public class ClinicaController implements Initializable {
         }
     }
     
+    /**
+     * Ini
+     * 
+     * @param url
+     * @param resources 
+     */
     @Override
     public void initialize(URL url, ResourceBundle resources) {
         // TODO
