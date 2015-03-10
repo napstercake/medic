@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This is a software created by me, If you have any question about this project
+ * just ask or make a pull request for this project.
+ * 
+ * @author Ricardo Gonzales [js.ricardo.gonzales@gmail.com]
  */
 
 package com.cqr.controller;
@@ -21,10 +22,26 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author ricardogonzales
+ * @class ricardogonzales
  */
 public class PacienteController implements Initializable {
     
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }  
+    
+    // FXML Methods.
+    
+    /**
+     * Show "Add new patient" GUI.
+     * 
+     * @param evento
+     * @throws IOException 
+     */
     @FXML
     private void showNuevoPaciente(ActionEvent evento) throws IOException {
         Node node=(Node) evento.getSource();
@@ -35,6 +52,12 @@ public class PacienteController implements Initializable {
         stage.show();
     }
     
+    /**
+     * Show "Patient search" GUI
+     * 
+     * @param evento
+     * @throws IOException 
+     */
     @FXML 
     private void showBuscarPaciente(ActionEvent evento) throws IOException {
         Node node=(Node) evento.getSource();
@@ -45,6 +68,12 @@ public class PacienteController implements Initializable {
         stage.show();
     }
     
+    /**
+     * Show list of patients.
+     * 
+     * @param evento
+     * @throws IOException 
+     */
     @FXML 
     private void showListadoPacientes(ActionEvent evento) throws IOException {
         Node node=(Node) evento.getSource();
@@ -55,6 +84,12 @@ public class PacienteController implements Initializable {
         stage.show();
     }
     
+    /**
+     * Return to Main menu.
+     * 
+     * @param evento
+     * @throws IOException 
+     */
     @FXML 
     private void backToClinica(ActionEvent evento) throws IOException {
         Node node=(Node) evento.getSource();
@@ -64,14 +99,5 @@ public class PacienteController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
 }
 
