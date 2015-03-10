@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This is a software created by me, If you have any question about this project
+ * just ask or make a pull request for this project.
+ * 
+ * @author Ricardo Gonzales [js.ricardo.gonzales@gmail.com]
  */
 
 package com.cqr.controller;
@@ -31,10 +32,11 @@ import org.xml.sax.SAXException;
 /**
  * FXML Controller class
  *
- * @author ricardogonzales
+ * @class This class allows to the user creates a new record for patient.
  */
 public class PacienteNuevoController implements Initializable {
     
+    // FXML variables.
     @FXML private TextField txtNombre;
     @FXML private TextField txtApellido;
     @FXML private TextField txtDireccion;
@@ -47,11 +49,20 @@ public class PacienteNuevoController implements Initializable {
     @FXML private TextField txtTalla;
     @FXML private TextField txtNrohistoria;
     
-    @FXML private Button btnGuardarPaciente;
-
+    // FXML Methods.
+    
+    /**
+     * Save patient.
+     * 
+     * @param evento
+     * @throws WriteException
+     * @throws SAXException
+     * @throws TransformerException 
+     */
     @FXML
     private void guardarPaciente(ActionEvent evento) throws WriteException, SAXException, TransformerException {
         
+        // Validate if the textfields are empty.
         if ( txtNombre.getText().trim().equalsIgnoreCase("") 
                 || txtApellido.getText().trim().equalsIgnoreCase("")
                 || txtEdad.getText().trim().equalsIgnoreCase("")
@@ -65,61 +76,67 @@ public class PacienteNuevoController implements Initializable {
             
         }  else {
             
+            // Add a new patient without an email account.
             if (txtCorreo.getText().trim().equalsIgnoreCase("")) {
                 
                 PacienteBean pacienteBean = new PacienteBean();
                     
-                    pacienteBean.setNrohistoria(txtNrohistoria.getText());
-                    pacienteBean.setNombre(txtNombre.getText());
-                    pacienteBean.setApellido(txtApellido.getText());
-                    pacienteBean.setDireccion(txtDireccion.getText().trim());
-                    pacienteBean.setCorreo(txtCorreo.getText().trim());
-                    pacienteBean.setCelular(txtCelular.getText().trim());
-                    pacienteBean.setFijo(txtFijo.getText().trim());
-                    pacienteBean.setFechaNacimiento(txtFecNac.getText().trim());
-                    pacienteBean.setEdad(Integer.parseInt(txtEdad.getText().trim()));
-                    pacienteBean.setPeso(txtPeso.getText().trim());
-                    pacienteBean.setTalla(txtTalla.getText().trim());
+                // Set data on patientBean object.
+                pacienteBean.setNrohistoria(txtNrohistoria.getText());
+                pacienteBean.setNombre(txtNombre.getText());
+                pacienteBean.setApellido(txtApellido.getText());
+                pacienteBean.setDireccion(txtDireccion.getText().trim());
+                pacienteBean.setCorreo(txtCorreo.getText().trim());
+                pacienteBean.setCelular(txtCelular.getText().trim());
+                pacienteBean.setFijo(txtFijo.getText().trim());
+                pacienteBean.setFechaNacimiento(txtFecNac.getText().trim());
+                pacienteBean.setEdad(Integer.parseInt(txtEdad.getText().trim()));
+                pacienteBean.setPeso(txtPeso.getText().trim());
+                pacienteBean.setTalla(txtTalla.getText().trim());
 
-                    IXMLParserPaciente xmlParser = new XMLParserPaciente();
+                IXMLParserPaciente xmlParser = new XMLParserPaciente();
 
-                    if (xmlParser.savePaciente(pacienteBean)) {
+                if (xmlParser.savePaciente(pacienteBean)) {
 
-                        Dialogs.create().owner(null)
-                            .title("Registro de pacientes.")
-                            .masthead(null)
-                            .message( "Paciente guardado satisfactoriamente.")
-                            .showInformation();
+                    Dialogs.create().owner(null)
+                        .title("Registro de pacientes.")
+                        .masthead(null)
+                        .message( "Paciente guardado satisfactoriamente.")
+                        .showInformation();
 
-                        txtNrohistoria.setText("");
-                        txtNombre.setText("");
-                        txtApellido.setText("");
-                        txtDireccion.setText("");
-                        txtCorreo.setText("");
-                        txtCelular.setText("");
-                        txtFijo.setText("");
-                        txtFecNac.setText("");
-                        txtEdad.setText("");
-                        txtPeso.setText("");
-                        txtTalla.setText("");
-                        
-                    } else {
+                    // Clean textfields values.
+                    txtNrohistoria.setText("");
+                    txtNombre.setText("");
+                    txtApellido.setText("");
+                    txtDireccion.setText("");
+                    txtCorreo.setText("");
+                    txtCelular.setText("");
+                    txtFijo.setText("");
+                    txtFecNac.setText("");
+                    txtEdad.setText("");
+                    txtPeso.setText("");
+                    txtTalla.setText("");
 
-                        Dialogs.create().owner(null)
-                            .title("Error.")
-                            .masthead(null)
-                            .message( "El paciente no se ha guardado. Intentelo nuevamente.")
-                            .showWarning();
-                    }
+                } else {
+
+                    Dialogs.create().owner(null)
+                        .title("Error.")
+                        .masthead(null)
+                        .message( "El paciente no se ha guardado. Intentelo nuevamente.")
+                        .showWarning();
+                }
                 
             } else {
+                
+                // Add a new patient with an email account.
                 
                 Util util = new Util();
             
                 if (util.isValidEmailAddress(txtCorreo.getText().trim())) {
 
                     PacienteBean pacienteBean = new PacienteBean();
-
+                    
+                    // Set data on patientBean object.
                     pacienteBean.setNrohistoria(txtNrohistoria.getText().trim());
                     pacienteBean.setNombre(txtNombre.getText());
                     pacienteBean.setApellido(txtApellido.getText());
@@ -134,6 +151,7 @@ public class PacienteNuevoController implements Initializable {
 
                     IXMLParserPaciente xmlParser = new XMLParserPaciente();
 
+                    // Validates if the patient data was succesfully recorded.
                     if (xmlParser.savePaciente(pacienteBean)) {
 
                         Dialogs.create().owner(null)
@@ -142,6 +160,7 @@ public class PacienteNuevoController implements Initializable {
                             .message( "Paciente guardado correctamente.")
                             .showInformation();
 
+                        // Clean textfields.
                         txtNrohistoria.setText("");
                         txtNombre.setText("");
                         txtApellido.setText("");
@@ -154,7 +173,6 @@ public class PacienteNuevoController implements Initializable {
                         txtPeso.setText("");
                         txtTalla.setText("");
 
-
                     } else {
 
                         Dialogs.create().owner(null)
@@ -165,6 +183,8 @@ public class PacienteNuevoController implements Initializable {
                     }
 
                 } else {
+                    
+                    // Worng email.
                     Dialogs.create().owner(null)
                     .title("Email incorrecto.")
                     .masthead(null)
@@ -178,6 +198,12 @@ public class PacienteNuevoController implements Initializable {
         }
     }
     
+    /**
+     * Return to patient GUI.
+     * 
+     * @param evento
+     * @throws IOException 
+     */
     @FXML
     private void backToPaciente(ActionEvent evento) throws IOException {
         Node node=(Node) evento.getSource();
@@ -194,6 +220,7 @@ public class PacienteNuevoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        // Cleaning textfield.
         txtNrohistoria.setText("");
         txtNombre.setText("");
         txtApellido.setText("");
@@ -207,5 +234,4 @@ public class PacienteNuevoController implements Initializable {
         txtTalla.setText("");
         
     }    
-    
 }
