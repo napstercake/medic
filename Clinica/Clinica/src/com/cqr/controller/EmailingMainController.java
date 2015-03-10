@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This is a software created by me, If you have any question about this project
+ * just ask or make a pull request for this project.
+ * 
+ * @author Ricardo Gonzales [js.ricardo.gonzales@gmail.com]
  */
 
 package com.cqr.controller;
@@ -21,18 +22,25 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author ricardogonzales
+ * @class This class is used to handle the emailing main GUI.
  */
 public class EmailingMainController implements Initializable {
     
-    
     /**
-     * 
+     * Constructor.
      */
     public EmailingMainController() {
         
     }
     
+    // FXML Methods
+    
+    /**
+     * Return to main GUI.
+     * 
+     * @param evento
+     * @throws IOException 
+     */
     @FXML
     public void regresarEmailing(ActionEvent evento) throws IOException {
         Node node=(Node) evento.getSource();
@@ -43,6 +51,12 @@ public class EmailingMainController implements Initializable {
         stage.show();        
     }
     
+    /**
+     * Send email to the complete list of patients.
+     * 
+     * @param evento
+     * @throws IOException 
+     */
     @FXML
     public void enviarATodos(ActionEvent evento) throws IOException {
         Node node=(Node) evento.getSource();
@@ -53,6 +67,12 @@ public class EmailingMainController implements Initializable {
         stage.show();   
     }
     
+    /**
+     * Send email to selected patients.
+     * 
+     * @param evento
+     * @throws IOException 
+     */
     @FXML
     private void enviarPacSeleccionados(ActionEvent evento) throws IOException {
         Node node=(Node) evento.getSource();
