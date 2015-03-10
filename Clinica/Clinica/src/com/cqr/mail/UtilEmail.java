@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This is a software created by me, If you have any question about this project
+ * just ask or make a pull request for this project.
+ * 
+ * @author Ricardo Gonzales [js.ricardo.gonzales@gmail.com]
  */
 
 package com.cqr.mail;
@@ -23,25 +24,44 @@ import javax.mail.internet.MimeMultipart;
 
 /**
  *
- * @author ricardogonzales
+ * @class This class contains all main methods for the send email process.
  */
 public class UtilEmail {
     
+    // Class variables.
     private BeanMail beanMail;
     List<String> emailList;
     
+    /**
+     * Constructor.
+     */
     public UtilEmail() {
     }
     
+    /**
+     * Set the values for constructor.
+     * 
+     * @param beanMail
+     * @param emailList 
+     */
     public UtilEmail(BeanMail beanMail, List<String> emailList) {
         this.beanMail = beanMail;
         this.emailList = emailList;
     }
     
+    /**
+     * This methods is used to sent an email with some file attached.
+     * 
+     * @param beanMail
+     * @param autenticacion
+     * @param emailList
+     * @return boolean.
+     */
     public boolean enviarEmailHtmlAdjunto(BeanMail beanMail, boolean autenticacion, List<String> emailList) {
         
         boolean blnResultado = false;
         
+        // Validate authenticationl.
         if (autenticacion == true) {
             this.enviarEmailConAutenticacion(beanMail,emailList);
             blnResultado = true;
@@ -53,10 +73,17 @@ public class UtilEmail {
         return blnResultado;
     }
     
+    /**
+     * This method is used to send a simple email.
+     * 
+     * @param beanMail
+     * @param emailList 
+     */
     public void enviarEmailConAutenticacion(BeanMail beanMail, List<String> emailList) {
         
         try {
             
+            // Validate if the object is not null.
             if (beanMail != null) {
                 this.beanMail = beanMail;
                 
@@ -120,20 +147,6 @@ public class UtilEmail {
                     addressTo[i] = new InternetAddress(emailList.get(i));
                 }
                 
-//                mensaje.addRecipient(Message.RecipientType.TO, 
-//                            new InternetAddress(addressTo));
-                
-                
-//              if (this.beanMail.getCuentaEmailDestinatario() != null) {
-//                  mensaje.addRecipient(Message.RecipientType.TO, new InternetAddress(this.beanMail.getCuentaEmailDestinatario()));
-//              }
-//                if (this.beanMail.getCuentaEmailDestinatario_Cc() != null) {
-//                    mensaje.addRecipient(Message.RecipientType.CC, new InternetAddress(this.beanMail.getCuentaEmailDestinatario_Cc()));
-//                }
-//                if (this.beanMail.getCuentaEmailDestinatario_Bcc() != null) {
-//                    mensaje.addRecipient(Message.RecipientType.BCC, new InternetAddress(this.beanMail.getCuentaEmailDestinatario_Bcc()));
-//                }
-                
                 mensaje.setSubject(this.beanMail.getAsuntoMensaje());
                 mensaje.setContent(multiPartPrincipal);
                 mensaje.setSentDate(new Date());
@@ -144,11 +157,8 @@ public class UtilEmail {
                     transportador.connect(this.beanMail.getUsuario(), this.beanMail.getPassword());
                     transportador.sendMessage(mensaje, addressTo);
                     transportador.close();
-                    
                 }
-                
             }
-            
         } catch (Exception ex) {
             System.out.println("Error al enviar el email.");
             ex.printStackTrace();
