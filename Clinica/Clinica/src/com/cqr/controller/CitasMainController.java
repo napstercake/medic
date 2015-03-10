@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This is a software created by me, If you have any question about this project
+ * just ask or make a pull request for this project.
+ * 
+ * @author Ricardo Gonzales [js.ricardo.gonzales@gmail.com]
  */
 
 package com.cqr.controller;
@@ -21,11 +22,26 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author ricardogonzales
+ * @class FXML Controller class
  */
 public class CitasMainController implements Initializable {
-
     
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }    
+    
+    // FXML Methods
+    
+    /**
+     * Check appointments.
+     * 
+     * @param evento
+     * @throws IOException 
+     */
     @FXML
     private void verCitasHoy(ActionEvent evento) throws IOException {
         Node node=(Node) evento.getSource();
@@ -36,6 +52,12 @@ public class CitasMainController implements Initializable {
         stage.show();
     }
     
+    /**
+     * Add an appointment.
+     * 
+     * @param evento
+     * @throws IOException 
+     */
     @FXML
     private void registrarCita(ActionEvent evento) throws IOException {
         Node node=(Node) evento.getSource();
@@ -46,6 +68,12 @@ public class CitasMainController implements Initializable {
         stage.show();
     }
     
+    /**
+     * Return to main GUI.
+     * 
+     * @param evento
+     * @throws IOException 
+     */
     @FXML
     private void regresarClinica(ActionEvent evento) throws IOException {
         Node node=(Node) evento.getSource();
@@ -55,12 +83,4 @@ public class CitasMainController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
 }
