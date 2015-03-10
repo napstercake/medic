@@ -9,7 +9,7 @@
         <codigopaciente>2</codigopaciente>
     </cita>
     <cita>
-        <fecha>2015-03-09</fecha>
+        <fecha>2015-03-12</fecha>
         <codigo>2</codigo>
         <hora>05:00 PM</hora>
         <estado>P. Nuevo</estado>
@@ -17,7 +17,7 @@
         <codigopaciente>3</codigopaciente>
     </cita>
     <cita>
-        <fecha>2015-03-09</fecha>
+        <fecha>2015-03-12</fecha>
         <codigo>3</codigo>
         <hora>11:15 AM</hora>
         <estado>P. Plan</estado>
@@ -25,7 +25,7 @@
         <codigopaciente>1</codigopaciente>
     </cita>
     <cita>
-        <fecha>2015-03-08</fecha>
+        <fecha>2015-03-12</fecha>
         <codigo>7</codigo>
         <hora>09:00 AM</hora>
         <estado>P. Plan</estado>
@@ -33,7 +33,7 @@
         <codigopaciente>1</codigopaciente>
     </cita>
     <cita>
-        <fecha>2015-03-08</fecha>
+        <fecha>2015-03-12</fecha>
         <codigo>8</codigo>
         <hora>09:00 AM</hora>
         <estado>P. Nuevo</estado>
@@ -41,12 +41,20 @@
         <codigopaciente>2</codigopaciente>
     </cita>
 
-<cita>
-        <fecha>2015-03-09</fecha>
+    <cita>
+        <fecha>2015-03-11</fecha>
         <codigo>7</codigo>
         <hora>11:15 AM</hora>
         <estado>P. Plan</estado>
         <notas/>
         <codigopaciente>2</codigopaciente>
+    </cita>
+    <cita>
+        <fecha>2015-03-11</fecha>
+        <codigo>7</codigo>
+        <hora>09:45 AM</hora>
+        <estado>P. Nuevo</estado>
+        <notas/>
+        <codigopaciente>3</codigopaciente>
     </cita>
 </citas>
