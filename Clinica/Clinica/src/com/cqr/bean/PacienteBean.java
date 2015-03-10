@@ -1,17 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This is a software created by me, If you have any question about this project
+ * just ask or make a pull request for this project.
+ * 
+ * @author Ricardo Gonzales [js.ricardo.gonzales@gmail.com]
  */
 
 package com.cqr.bean;
 
 /**
- *
- * @author ricardogonzales
+ * @class This bean is used for the Patient object.
  */
 public class PacienteBean {
     
+    // Private variables for patient object.
     private Integer codigo;
     private String nrohistoria;
     private String nombre;
@@ -24,6 +25,8 @@ public class PacienteBean {
     private Integer edad;
     private String peso;
     private String talla;
+    
+    // Getters and setters
     
     public Integer getCodigo() {
         return codigo;

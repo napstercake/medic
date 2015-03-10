@@ -40,14 +40,7 @@
         <notas/>
         <codigopaciente>2</codigopaciente>
     </cita>
-<cita>
-        <fecha>2015-03-09</fecha>
-        <codigo>6</codigo>
-        <hora>11:15 AM</hora>
-        <estado>P. Mantenimiento</estado>
-        <notas/>
-        <codigopaciente>2</codigopaciente>
-    </cita>
+
 <cita>
         <fecha>2015-03-09</fecha>
         <codigo>7</codigo>

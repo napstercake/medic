@@ -1,17 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This is a software created by me, If you have any question about this project
+ * just ask or make a pull request for this project.
+ * 
+ * @author Ricardo Gonzales [js.ricardo.gonzales@gmail.com]
  */
 
 package com.cqr.bean;
 
 /**
- *
- * @author ricardogonzales
+ * @class This bean is used for the Appointment object.
  */
 public class CitaBean {
     
+    // Private variables for appointment object.
     private Integer codigo;
     private Integer codigopaciente;
     private String nombrepaciente;
@@ -19,6 +20,8 @@ public class CitaBean {
     private String hora;
     private String fecha;
     private String notas;
+    
+    // Getters and setters.
 
     public Integer getCodigo() {
         return codigo;

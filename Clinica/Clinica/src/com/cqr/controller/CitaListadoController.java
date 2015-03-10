@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This is a software created by me, If you have any question about this project
+ * just ask or make a pull request for this project.
+ * 
+ * @author Ricardo Gonzales [js.ricardo.gonzales@gmail.com]
  */
 
 package com.cqr.controller;
@@ -55,26 +56,26 @@ import javafx.util.Callback;
 import org.controlsfx.dialog.Dialogs;
 
 /**
- * FXML Controller class
+ * This class work directly with the list of appointments in the
+ * GUI.
  *
- * @author ricardogonzales
+ * @class FXML Controller class
  */
 public class CitaListadoController implements Initializable {
     
+    // FXML variables from GUI
     @FXML private VBox vBoxDateHolder;
-    
     @FXML private AnchorPane AnchorPane;
-    
     @FXML private Label lblFecha;
     @FXML private Button btnEliminarCita;
     @FXML private Button btnImprimir;
-    
     @FXML private TableView<CitaBean> tableListadoCitas;
     @FXML private TableColumn clnCodigo;
     @FXML private TableColumn clnNombrePaciente;
     @FXML private TableColumn clnFecha;
     @FXML private TableColumn clnHora;
     @FXML private TableColumn clnEstado;
+    
     ObservableList<CitaBean> citasObservable;
     
     private int posicionCitaEnTabla;
@@ -94,11 +95,18 @@ public class CitaListadoController implements Initializable {
             "07:45 PM","08:00 PM"
         };
 	
-	int POINTS_PER_INCH = 72;
+    int POINTS_PER_INCH = 72;
     
+    /**
+     * Constructor
+     */
     public CitaListadoController(){
     }
     
+    /**
+     * This is method is a listener that works when the user
+     * select any row on the table. 
+     */
     private final ListChangeListener<CitaBean> selectorTableCita =
             new ListChangeListener<CitaBean>() {
 
@@ -109,6 +117,9 @@ public class CitaListadoController implements Initializable {
                 
     };
     
+    /**
+     * This method load data from an appointment.
+     */
     private void ponerCitaSeleccionada() {
         
         final CitaBean citaBean = getTablaCitaSeleccionado();
@@ -116,12 +127,16 @@ public class CitaListadoController implements Initializable {
         
         if (citaBean != null) {
             
-            //Poner datos en textfields.
+            // Poner datos en textfields.
             codigoCitaSeleccionada = citaBean.getCodigo().toString();
             btnEliminarCita.setDisable(false);
         }
     }
     
+    /**
+     * 
+     * @return AppointmentBean Object
+     */
     public CitaBean getTablaCitaSeleccionado() {
         
         if(tableListadoCitas != null) {
@@ -137,6 +152,9 @@ public class CitaListadoController implements Initializable {
         return null;
     }
     
+    /**
+     * Ini table appointments.
+     */
     private void inicializarTablaCitas() {
         
         clnCodigo.setCellValueFactory(new PropertyValueFactory("codigo"));
@@ -157,6 +175,7 @@ public class CitaListadoController implements Initializable {
                     
                     if (!empty) {
                     
+                        // Setting style for each category
                         if (name.toLowerCase().equalsIgnoreCase("p. mantenimiento")) {
                             getStyleClass().add("pacMantenimiento");
                         } else if (name.toLowerCase().equalsIgnoreCase("p. nuevo")) {
@@ -172,24 +191,19 @@ public class CitaListadoController implements Initializable {
         }
     });
         
-        citasObservable = FXCollections.observableArrayList();
-        tableListadoCitas.setItems(citasObservable);
-        tableListadoCitas.setPlaceholder(new Label("No hay citas registradas para la fecha"));
+    citasObservable = FXCollections.observableArrayList();
+    tableListadoCitas.setItems(citasObservable);
+    tableListadoCitas.setPlaceholder(new Label("No hay citas registradas para la fecha"));
         
     }
     
-    @FXML
-    private void regresarCitaMain(ActionEvent evento) throws IOException {
-        Node node=(Node) evento.getSource();
-        Stage stage=(Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/com/cqr/fxml/CitasMain.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        
-    }
-
-    // Get pacientes by hour
+    /**
+     * This method get a list of Patients registered for 
+     * an appointment by hour.
+     * 
+     * @param hour
+     * @return List
+     */
     private List<CitaBean> getPacientesByHour(String hour) {
         
         List<CitaBean> pacienteOnHour = new ArrayList();
@@ -207,17 +221,27 @@ public class CitaListadoController implements Initializable {
         
         return pacienteOnHour;
     }
-    // GET MIN.
+   
+    /**
+     * Get boundaries for the printed paper
+     * 
+     * @param printJob
+     * @return 
+     */
     static private PageFormat getMin(PrinterJob printJob) {
         PageFormat pf0 = printJob.defaultPage();
         PageFormat pf1 = (PageFormat) pf0.clone();
         Paper p = pf0.getPaper();
-        p.setImageableArea(5, 1, pf0.getWidth(), pf0.getHeight());//1,1,pF..., pf0...
+        p.setImageableArea(5, 1, pf0.getWidth(), pf0.getHeight());
         pf1.setPaper(p);
         PageFormat pf2 = printJob.validatePage(pf1);
         return pf2;
     }
     
+    /**
+     * @class This class is used to print and set main values for 
+     * the appointments list.
+     */
     public class IntroPage implements Printable {
 	
        @Override
@@ -246,9 +270,9 @@ public class CitaListadoController implements Initializable {
             int starColumn = 0;
             int starRow = 10;
             
-            int columnWidth = 50;//40
+            int columnWidth = 50;
             int rowsCount = 39;
-            int colsCount = 3;//4
+            int colsCount = 3;
             int rowsHeigth = 16;
             
             Double doubleValue = (pageFormat.getImageableWidth() - columnWidth) / colsCount;
@@ -284,7 +308,7 @@ public class CitaListadoController implements Initializable {
                             txtHeader = "Hora";
                             
                         } else if (iCol == 1) {
-                            starColumn = 50;//40
+                            starColumn = 50;
                             
                             // Printing (history) name and lastname;
                             columnWidth = calcColumn;
@@ -322,7 +346,7 @@ public class CitaListadoController implements Initializable {
                         } else { 
                             
                             if (iCol==1) {
-                                starColumn = 50;//40
+                                starColumn = 50;
                             } else {
                                 starColumn += calcColumn;
                             }
@@ -373,85 +397,12 @@ public class CitaListadoController implements Initializable {
         }
     }
     
-    @FXML
-    private void imprimirCitas(ActionEvent evento) throws IOException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-        
-        if (citasObservable.isEmpty()){
-            Dialogs.create().owner(null)
-                    .title("Error.")
-                    .masthead(null)
-                    .message( "Error al imprimir la cita. No existen registros para imprimir.")
-                    .showWarning();
-        } else {
-        
-            try {
-                
-                PrinterJob printJob = PrinterJob.getPrinterJob();
-                
-                Book book = new Book();
-                book.append(new IntroPage(), getMin(printJob));
-                
-                PageFormat documentPageFormat = new PageFormat();
-                documentPageFormat.setOrientation(PageFormat.PORTRAIT);
-                
-                printJob.setPageable(book);
-                
-                if (printJob.printDialog()) {
-                    try {
-                      printJob.print();
-                    } catch (Exception PrintException) {
-                      PrintException.printStackTrace();
-                    }
-                }
-                
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    
-    @FXML
-    private void eliminarCita(ActionEvent evento) throws IOException {
-        
-        if (codigoCitaSeleccionada.equalsIgnoreCase("") || codigoCitaSeleccionada == null) {
-            
-            Dialogs.create().owner(null)
-                    .title("Error al eliminar cita.")
-                    .masthead(null)
-                    .message( "Debe seleccionar una cita para eliminarla.")
-                    .showWarning();
-            
-        } else {
-            
-            //Eliminar desde el xml
-            IXMLParserCita xmlPC = new XMLParserCita();
-        
-            if (xmlPC.deleteCita(codigoCitaSeleccionada)) {
-            
-                Dialogs.create().owner(null)
-                        .title("Cita eliminada")
-                        .masthead(null)
-                        .message( "Cita eliminada satisfactoriamente.")
-                        .showInformation();
-
-                // Eliminar de la tabla.
-                citasObservable.remove(posicionCitaEnTabla);
-            } else {
-                Dialogs.create().owner(null)
-                    .title("Error.")
-                    .masthead(null)
-                    .message( "Error al eliminar la cita. Vuelva a intentarlo nuevamente.")
-                    .showWarning();
-            }
-        }
-    }
-    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //NAPSTER
+        
         lblFecha.setText(LocalDate.now().toString());
         btnEliminarCita.setDisable(true);
         
@@ -459,24 +410,32 @@ public class CitaListadoController implements Initializable {
                 tableListadoCitas.getSelectionModel().getSelectedItems();
         tablaCitaSel.addListener(selectorTableCita);
         
-        /**
-         * Datepicker.
-         */
+        // Date picker
         final DatePicker datePicker = new DatePicker(LocalDate.now());
         datePicker.setOnAction(event -> {
             LocalDate date = datePicker.getValue();
             
-            //Llenar tabla
+            // Populate table by date
             llenarTablaPorFecha(date);
         });
+        
+        // Adding the date picker
         vBoxDateHolder.getChildren().add(datePicker);
         
+        // Populate table by this date
         llenarTablaPorFecha(LocalDate.now());
         
     }
     
+    /**
+     * This method populates the table by
+     * any given date.
+     * 
+     * @param date 
+     */
     public void llenarTablaPorFecha(LocalDate date) {
         
+        // Ini appointment table.
         this.inicializarTablaCitas();
         
         arregloCitas = new ArrayList();
@@ -509,9 +468,123 @@ public class CitaListadoController implements Initializable {
             
             tableListadoCitas.getColumnResizePolicy();
             
-            
         } catch(Exception e) {
             e.printStackTrace();
+        }
+    }
+    
+    // FXML Methods
+    
+    /**
+     * Get back to Appointment main interface.
+     * 
+     * @param evento
+     * @throws IOException 
+     */
+    @FXML
+    private void regresarCitaMain(ActionEvent evento) throws IOException {
+        Node node=(Node) evento.getSource();
+        Stage stage=(Stage) node.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/com/cqr/fxml/CitasMain.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        
+    }
+    
+    /**
+     * This method fired the groups of methods to start printing.
+     * 
+     * @param evento
+     * @throws IOException
+     * @throws NoSuchMethodException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws IllegalArgumentException
+     * @throws InvocationTargetException 
+     */
+    @FXML
+    private void imprimirCitas(ActionEvent evento) throws 
+            IOException, NoSuchMethodException, InstantiationException, 
+            IllegalAccessException, IllegalArgumentException, 
+            InvocationTargetException {
+        
+        // Check if the list is empty
+        if (citasObservable.isEmpty()){
+            Dialogs.create().owner(null)
+                    .title("Error.")
+                    .masthead(null)
+                    .message( "Error al imprimir la cita. No existen registros para imprimir.")
+                    .showWarning();
+        } else {
+        
+            try {
+                
+                // Page format
+                PrinterJob printJob = PrinterJob.getPrinterJob();
+                
+                Book book = new Book();
+                book.append(new IntroPage(), getMin(printJob));
+                
+                PageFormat documentPageFormat = new PageFormat();
+                documentPageFormat.setOrientation(PageFormat.PORTRAIT);
+                
+                printJob.setPageable(book);
+                
+                // Printing task
+                if (printJob.printDialog()) {
+                    try {
+                      printJob.print();
+                    } catch (Exception PrintException) {
+                      PrintException.printStackTrace();
+                    }
+                }
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    /**
+     * Delete appointment
+     * 
+     * @param evento
+     * @throws IOException 
+     */
+    @FXML
+    private void eliminarCita(ActionEvent evento) throws IOException {
+        
+        if (codigoCitaSeleccionada.equalsIgnoreCase("") || codigoCitaSeleccionada == null) {
+            
+            Dialogs.create().owner(null)
+                    .title("Error al eliminar cita.")
+                    .masthead(null)
+                    .message( "Debe seleccionar una cita para eliminarla.")
+                    .showWarning();
+            
+        } else {
+            
+            // Delete from XML file
+            IXMLParserCita xmlPC = new XMLParserCita();
+        
+            if (xmlPC.deleteCita(codigoCitaSeleccionada)) {
+            
+                Dialogs.create().owner(null)
+                        .title("Cita eliminada")
+                        .masthead(null)
+                        .message( "Cita eliminada satisfactoriamente.")
+                        .showInformation();
+
+                // Delete from the table at the UI
+                citasObservable.remove(posicionCitaEnTabla);
+            } else {
+                Dialogs.create().owner(null)
+                    .title("Error.")
+                    .masthead(null)
+                    .message( "Error al eliminar la cita. Vuelva a intentarlo nuevamente.")
+                    .showWarning();
+            }
         }
     }
 }
