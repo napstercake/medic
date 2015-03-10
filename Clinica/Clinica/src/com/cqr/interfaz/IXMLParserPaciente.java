@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This is a software created by me, If you have any question about this project
+ * just ask or make a pull request for this project.
+ * 
+ * @author Ricardo Gonzales [js.ricardo.gonzales@gmail.com]
  */
 
 package com.cqr.interfaz;
@@ -11,51 +12,59 @@ import java.util.List;
 
 /**
  *
- * @author ricardogonzales
+ * @class Interface class with access methods to handler the
+ * XML File.
  * 
  */
 public interface IXMLParserPaciente {
     
     /**
+     * Get patient's name by code.
      * 
      * @param pacienteCodigo
-     * @return 
+     * @return String
      */
     public String getNamePacienteByCode(String pacienteCodigo);
     
     /**
+     * Get patient's email.
      * 
-     * @return 
+     * @return List
      */
     public List<String> getPacientesEmail();
     
     /**
+     * Parse XML Patient with email.
      * 
-     * @return 
+     * @return List
      */
     public List<PacienteBean> readXMLPacientesWMail();
     
     /**
+     * Read patient's records from XML File.
      * 
-     * @return 
+     * @return List
      */
     public List<PacienteBean> readXMLPacientes();
     
     /**
+     * Update patient.
      * 
      * @param pacienteBean
-     * @return 
+     * @return boolean
      */
     public boolean updatePaciente(PacienteBean pacienteBean);
     
     /**
+     * Save patient record on XML file and table.
      * 
      * @param pacienteBean
-     * @return 
+     * @return boolean
      */
     public boolean savePaciente(PacienteBean pacienteBean);
     
     /**
+     * Delete patient from XML file and table.
      * 
      * @param codigoPaciente
      * @return 
