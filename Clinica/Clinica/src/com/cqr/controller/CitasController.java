@@ -55,39 +55,42 @@ import org.controlsfx.dialog.Dialogs;
  */
 public class CitasController implements Initializable {
     
+    // FXML variables from GUI
     @FXML private Button btnGuardarCita;
     @FXML private Button btnRegresar;
-    
     @FXML private VBox dateHolder;
     @FXML private VBox vBoxToggle;
     @FXML private Label lblPaciente;
-    
     @FXML private Label lblReservarCita;
     @FXML private Label lblFecha;
     @FXML private Label lblHora;
     @FXML private Label lblNotas;
-    
     @FXML private ComboBox cbxHora;
     @FXML private TextArea taNotas;
-    
     @FXML private TableView<CitaBean> tblCitas;
     @FXML private TableColumn clnNombrePaciente;
     @FXML private TableColumn clnHora;
     @FXML private TableColumn clnEstado;
     @FXML private TableColumn clnNotas;
-    ObservableList<CitaBean> citasObservable;
-    
-    PacienteBean pacienteBean;
-    
     @FXML private Label lblNombreApellido;
     @FXML private Label lblEdad;
     
+    // Global variables
+    ObservableList<CitaBean> citasObservable;
+    PacienteBean pacienteBean;
     String toggleSelected;
     LocalDate date;
     
+    /**
+     * Constructor
+     */
     public CitasController() {
     }
     
+    /**
+     * This is method is a listener that works when the user
+     * select any row on the table. 
+     */
     private final ListChangeListener<CitaBean> selectorTableCita =
            new ListChangeListener<CitaBean>() {
 
@@ -96,6 +99,11 @@ public class CitasController implements Initializable {
         }
     };
     
+    /**
+     * Get row selected on table.
+     * 
+     * @return 
+     */
     public CitaBean getTablaCitaSeleccionada() {
         
         if (tblCitas != null) {
@@ -111,6 +119,9 @@ public class CitasController implements Initializable {
         return null;
     }
     
+    /**
+     * Ini tables with appointments.
+     */
     private void inicializarTablaCitas(){
        
         clnNombrePaciente.setCellValueFactory(new PropertyValueFactory("nombrepaciente"));
@@ -123,9 +134,181 @@ public class CitasController implements Initializable {
         tblCitas.setPlaceholder(new Label("No hay citas registradas para hoy"));
     }
     
+    /**
+     * Ini data.
+     * 
+     * @param pacienteBeanX 
+     */
+    public void initData(PacienteBean pacienteBeanX) {
+        
+        if (pacienteBeanX != null) {
+            lblNombreApellido.setText(pacienteBeanX.getNombre() + " " + pacienteBeanX.getApellido());
+            lblEdad.setText(pacienteBeanX.getEdad().toString());
+            
+            pacienteBean = pacienteBeanX;
+        }
+    }
+    
+    /**
+     * Initialize the controller class.
+     * 
+     * @param url
+     * @param rb 
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        
+        // Prepare items behavier for initialize.
+        cbxHora.setDisable(true);
+        taNotas.setDisable(true);
+        btnGuardarCita.setDisable(true);
+        lblReservarCita.setDisable(true);
+        lblFecha.setDisable(true);
+        lblHora.setDisable(true);
+        lblNotas.setDisable(true);
+        tblCitas.setDisable(true);
+        
+        /**
+         * Date picker.
+         */
+        final DatePicker datePicker = new DatePicker(LocalDate.now());
+        datePicker.setOnAction(event -> {
+            date = datePicker.getValue();
+        });
+        
+        dateHolder.getChildren().add(datePicker); 
+        
+        datePicker.setDisable(true); 
+        
+        // vBoxToggle implementation.
+        final ToggleButton tb1 = new ToggleButton("P. Nuevo");
+        final ToggleButton tb2 = new ToggleButton("P. Reporte");
+        final ToggleButton tb3 = new ToggleButton("P. Plan");
+        final ToggleButton tb4 = new ToggleButton("P. Mantenimiento");
+        
+        // Set buttons style.
+        tb1.setStyle("-fx-base: red;");
+        tb2.setStyle("-fx-base: green;");
+        tb3.setStyle("-fx-base: black");
+        tb4.setStyle("-fx-base: blue");
+        
+        // Set group for toogle item.
+        ToggleGroup group = new ToggleGroup();
+        tb1.setToggleGroup(group);
+        tb2.setToggleGroup(group);
+        tb3.setToggleGroup(group);
+        tb4.setToggleGroup(group);
+        
+        // Listener for the toogle item.
+        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            @Override public void changed(ObservableValue<? extends Toggle> 
+                    observable, Toggle oldValue, Toggle selectedToggle) {
+                
+                if(selectedToggle!=null) {
+                    
+                    toggleSelected = ((ToggleButton) selectedToggle).getText();
+                    
+                    if (toggleSelected.equalsIgnoreCase("P. Nuevo")) {
+                        lblPaciente.setTextFill(Color.RED);
+                    } else if(toggleSelected.equalsIgnoreCase("P. Reporte")) {
+                        lblPaciente.setTextFill(Color.GREEN);
+                    } else if(toggleSelected.equalsIgnoreCase("P. Plan")) {
+                        lblPaciente.setTextFill(Color.BLACK);
+                    } else if(toggleSelected.equalsIgnoreCase("P. Mantenimiento")) {
+                        lblPaciente.setTextFill(Color.BLUE);
+                    } 
+                    
+                    lblPaciente.setText(((ToggleButton) selectedToggle).getText());
+                    
+                    // Prepare behaivor items.
+                    cbxHora.setDisable(false);
+                    taNotas.setDisable(false);
+                    btnGuardarCita.setDisable(false);
+                    datePicker.setDisable(false);
+                    lblReservarCita.setDisable(false);
+                    lblFecha.setDisable(false);
+                    lblHora.setDisable(false);
+                    lblNotas.setDisable(false);
+                    tblCitas.setDisable(false);
+                    
+                } else {
+                    // Clean values.
+                    lblPaciente.setText("...");
+                }
+            }
+        });
+        
+        // Set boundaries 
+        GridPane.setConstraints(tb1,0,0);
+        GridPane.setConstraints(tb2,1,0);
+        GridPane.setConstraints(tb3,2,0);
+        GridPane.setConstraints(tb4,3,0);
+        
+        GridPane grid = new GridPane();
+        grid.setVgap(20);
+        grid.setHgap(10);
+        
+        vBoxToggle.getChildren().add(grid); 
+        grid.getChildren().addAll(tb1, tb2, tb3, tb4);
+        
+        // Table
+        this.inicializarTablaCitas();
+        
+        final ObservableList<CitaBean> tablaCitaSel = 
+                tblCitas.getSelectionModel().getSelectedItems();
+        tablaCitaSel.addListener(selectorTableCita);
+        
+        List<CitaBean> arregloCitas = new ArrayList();
+        IXMLParserCita xmlParser = new XMLParserCita();
+        IXMLParserPaciente xmlParserPaciente = new XMLParserPaciente();
+        
+        try {
+            
+            arregloCitas = xmlParser.getCitasByDate(datePicker.getValue().toString());
+            
+            for (int i=0; i<arregloCitas.size(); i++) {
+                
+                CitaBean citaTable = new CitaBean();
+                citaTable.setNombrepaciente(xmlParserPaciente.getNamePacienteByCode(arregloCitas.get(i).getCodigopaciente().toString()));
+                citaTable.setHora(arregloCitas.get(i).getHora());
+                citaTable.setEstado(arregloCitas.get(i).getEstado());
+                citaTable.setNotas(arregloCitas.get(i).getNotas());
+                
+                citasObservable.add(citaTable);
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        // ComboBox.
+        cbxHora.getItems().addAll(
+            "09:00 AM","09:15 AM","09:30 AM","09:45 AM",
+            "10:00 AM","10:15 AM","10:30 AM","10:45 AM",
+            "11:00 AM","11:15 AM","11:30 AM","11:45 AM",
+            "12:00 M","12:15 M","12:30 M","12:45 M",
+            "01:00 PM","03:00 PM","03:15 PM","03:30 PM","03:45 PM",
+            "04:00 PM","04:15 PM","04:30 PM","04:45 PM","05:00 PM",
+            "05:15 PM","05:30 PM","05:45 PM","06:00 PM","06:15 PM",
+            "06:30 PM","06:45 PM","07:00 PM","07:15 PM","07:30 PM",
+            "07:45 PM","08:00 PM"
+        );
+       
+        cbxHora.setValue("Seleccionar hora");
+    }
+    
+    // FXML Methods
+    
+    /**
+     * Save appointments data.
+     * 
+     * @param evento
+     * @throws IOException 
+     */
     @FXML
     private void guardarCita(ActionEvent evento) throws IOException {
         
+        // Validate combobox.
         if (cbxHora.getValue().toString().equalsIgnoreCase("Seleccionar hora")) {
         
             Dialogs.create().owner(null)
@@ -190,6 +373,12 @@ public class CitasController implements Initializable {
         }
     }
     
+    /**
+     * Return to "Add appointment" GUI
+     * 
+     * @param evento
+     * @throws IOException 
+     */
     @FXML
     private void regresarClinica(ActionEvent evento) throws IOException {
         Node node=(Node) evento.getSource();
@@ -198,168 +387,6 @@ public class CitasController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-    }
-    
-    public void initData(PacienteBean pacienteBeanX) {
-        
-        if (pacienteBeanX != null) {
-            lblNombreApellido.setText(pacienteBeanX.getNombre() + " " + pacienteBeanX.getApellido());
-            lblEdad.setText(pacienteBeanX.getEdad().toString());
-            
-            pacienteBean = pacienteBeanX;
-            
-        } else {
-            
-            
-        }
-    }
-    
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        
-        cbxHora.setDisable(true);
-        taNotas.setDisable(true);
-        btnGuardarCita.setDisable(true);
-        
-        lblReservarCita.setDisable(true);
-        lblFecha.setDisable(true);
-        lblHora.setDisable(true);
-        lblNotas.setDisable(true);
-        
-        tblCitas.setDisable(true);
-        
-        /**
-         * Datepicker.
-         */
-        // NAPSTER
-        final DatePicker datePicker = new DatePicker(LocalDate.now());
-        datePicker.setOnAction(event -> {
-            date = datePicker.getValue();
-        });
-        dateHolder.getChildren().add(datePicker); 
-        
-        datePicker.setDisable(true); 
-        
-        /* vBoxToggle implementation. */
-        
-        final ToggleButton tb1 = new ToggleButton("P. Nuevo");
-        final ToggleButton tb2 = new ToggleButton("P. Reporte");
-        final ToggleButton tb3 = new ToggleButton("P. Plan");
-        final ToggleButton tb4 = new ToggleButton("P. Mantenimiento");
-        
-        tb1.setStyle("-fx-base: red;");
-        tb2.setStyle("-fx-base: green;");
-        tb3.setStyle("-fx-base: black");
-        tb4.setStyle("-fx-base: blue");
-        
-        ToggleGroup group = new ToggleGroup();
-        
-        tb1.setToggleGroup(group);
-        tb2.setToggleGroup(group);
-        tb3.setToggleGroup(group);
-        tb4.setToggleGroup(group);
-        
-        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            @Override public void changed(ObservableValue<? extends Toggle> 
-                    observable, Toggle oldValue, Toggle selectedToggle) {
-                
-                if(selectedToggle!=null) {
-                    
-                    toggleSelected = ((ToggleButton) selectedToggle).getText();
-                    
-                    if (toggleSelected.equalsIgnoreCase("P. Nuevo")) {
-                        lblPaciente.setTextFill(Color.RED);
-                    } else if(toggleSelected.equalsIgnoreCase("P. Reporte")) {
-                        lblPaciente.setTextFill(Color.GREEN);
-                    } else if(toggleSelected.equalsIgnoreCase("P. Plan")) {
-                        lblPaciente.setTextFill(Color.BLACK);
-                    } else if(toggleSelected.equalsIgnoreCase("P. Mantenimiento")) {
-                        lblPaciente.setTextFill(Color.BLUE);
-                    } 
-                    
-                    lblPaciente.setText(((ToggleButton) selectedToggle).getText());
-                    cbxHora.setDisable(false);
-                    taNotas.setDisable(false);
-                    btnGuardarCita.setDisable(false);
-                    datePicker.setDisable(false);
-                    
-                    lblReservarCita.setDisable(false);
-                    lblFecha.setDisable(false);
-                    lblHora.setDisable(false);
-                    lblNotas.setDisable(false);
-                    
-                    tblCitas.setDisable(false);
-                    
-                }
-                else {
-                    lblPaciente.setText("...");
-                }
-            }
-        });
-        
-        //group.selectToggle(tb1);
-        
-        GridPane.setConstraints(tb1,0,0);
-        GridPane.setConstraints(tb2,1,0);
-        GridPane.setConstraints(tb3,2,0);
-        GridPane.setConstraints(tb4,3,0);
-        
-        GridPane grid = new GridPane();
-        grid.setVgap(20);
-        grid.setHgap(10);
-        
-        vBoxToggle.getChildren().add(grid); 
-        grid.getChildren().addAll(tb1, tb2, tb3, tb4);
-        
-        
-        /* Tabla */
-        this.inicializarTablaCitas();
-        
-        final ObservableList<CitaBean> tablaCitaSel = 
-                tblCitas.getSelectionModel().getSelectedItems();
-        tablaCitaSel.addListener(selectorTableCita);
-        
-        List<CitaBean> arregloCitas = new ArrayList();
-        IXMLParserCita xmlParser = new XMLParserCita();
-        IXMLParserPaciente xmlParserPaciente = new XMLParserPaciente();
-        
-        try {
-            
-            arregloCitas = xmlParser.getCitasByDate(datePicker.getValue().toString());
-            
-            for (int i=0; i<arregloCitas.size(); i++) {
-                
-                CitaBean citaTable = new CitaBean();
-                citaTable.setNombrepaciente(xmlParserPaciente.getNamePacienteByCode(arregloCitas.get(i).getCodigopaciente().toString()));
-                citaTable.setHora(arregloCitas.get(i).getHora());
-                citaTable.setEstado(arregloCitas.get(i).getEstado());
-                citaTable.setNotas(arregloCitas.get(i).getNotas());
-                
-                citasObservable.add(citaTable);
-            }
-            
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        
-        /* ComboBox.*/
-        cbxHora.getItems().addAll(
-            "09:00 AM","09:15 AM","09:30 AM","09:45 AM",
-            "10:00 AM","10:15 AM","10:30 AM","10:45 AM",
-            "11:00 AM","11:15 AM","11:30 AM","11:45 AM",
-            "12:00 M","12:15 M","12:30 M","12:45 M",
-            "01:00 PM","03:00 PM","03:15 PM","03:30 PM","03:45 PM",
-            "04:00 PM","04:15 PM","04:30 PM","04:45 PM","05:00 PM",
-            "05:15 PM","05:30 PM","05:45 PM","06:00 PM","06:15 PM",
-            "06:30 PM","06:45 PM","07:00 PM","07:15 PM","07:30 PM",
-            "07:45 PM","08:00 PM"
-        );
-       
-        cbxHora.setValue("Seleccionar hora");
-        
     }
 }
 
