@@ -76,25 +76,24 @@ public class CitaListadoController implements Initializable {
     @FXML private TableColumn clnHora;
     @FXML private TableColumn clnEstado;
     
+    // Global variables
     ObservableList<CitaBean> citasObservable;
-    
     private int posicionCitaEnTabla;
     private String codigoCitaSeleccionada;
-    
     List<CitaBean> arregloCitas = null;
+    String[] rowsHours = {
+            "-","09:00 AM","09:15 AM","09:30 AM","09:45 AM",
+        "10:00 AM","10:15 AM","10:30 AM","10:45 AM",
+        "11:00 AM","11:15 AM","11:30 AM","11:45 AM",
+        "12:00 M","12:15 M","12:30 M","12:45 M",
+        "01:00 PM","03:00 PM","03:15 PM","03:30 PM","03:45 PM",
+        "04:00 PM","04:15 PM","04:30 PM","04:45 PM","05:00 PM",
+        "05:15 PM","05:30 PM","05:45 PM","06:00 PM","06:15 PM",
+        "06:30 PM","06:45 PM","07:00 PM","07:15 PM","07:30 PM",
+        "07:45 PM","08:00 PM"
+    };
     
-	String[] rowsHours = {
-		"-","09:00 AM","09:15 AM","09:30 AM","09:45 AM",
-            "10:00 AM","10:15 AM","10:30 AM","10:45 AM",
-            "11:00 AM","11:15 AM","11:30 AM","11:45 AM",
-            "12:00 M","12:15 M","12:30 M","12:45 M",
-            "01:00 PM","03:00 PM","03:15 PM","03:30 PM","03:45 PM",
-            "04:00 PM","04:15 PM","04:30 PM","04:45 PM","05:00 PM",
-            "05:15 PM","05:30 PM","05:45 PM","06:00 PM","06:15 PM",
-            "06:30 PM","06:45 PM","07:00 PM","07:15 PM","07:30 PM",
-            "07:45 PM","08:00 PM"
-        };
-	
+    // Print value (DPI)
     int POINTS_PER_INCH = 72;
     
     /**
@@ -127,7 +126,7 @@ public class CitaListadoController implements Initializable {
         
         if (citaBean != null) {
             
-            // Poner datos en textfields.
+            // Load data on textfield
             codigoCitaSeleccionada = citaBean.getCodigo().toString();
             btnEliminarCita.setDisable(false);
         }
