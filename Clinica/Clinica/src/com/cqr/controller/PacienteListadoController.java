@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This is a software created by me, If you have any question about this project
+ * just ask or make a pull request for this project.
+ * 
+ * @author Ricardo Gonzales [js.ricardo.gonzales@gmail.com]
  */
 
 package com.cqr.controller;
@@ -48,10 +49,11 @@ import org.controlsfx.dialog.Dialogs;
 /**
  * FXML Controller class
  *
- * @author ricardogonzales
+ * @class Patient controller.
  */
 public class PacienteListadoController implements Initializable {
     
+    // FXML variables.
     @FXML private TableView tblPaciente;
     @FXML private TableColumn clnNrohistoria;
     @FXML private TableColumn clnNombre;
@@ -64,29 +66,27 @@ public class PacienteListadoController implements Initializable {
     @FXML private TableColumn clnEdad;
     @FXML private TableColumn clnPeso;
     @FXML private TableColumn clnTalla;
-    
     @FXML private TextField txtNrohistoriaApellido;
-    
     @FXML private Button btnExportarExcel;
     @FXML private Button btnEliminarPacSeleccionado;
     
+    // Class variables.
     private ObservableList filteredData = FXCollections.observableArrayList();
     private ObservableList<PacienteBean> pacienteObservable = FXCollections.observableArrayList();
-    
     List<PacienteBean> arregloPacientes = new ArrayList();
-    
     private int posicionPacienteEnTabla;
     private String codigoPacSel;
     
     /**
-     * 
+     * Constructor
      */
     public PacienteListadoController() {
         
     }
     
     /**
-     * 
+     * This is method is a listener that works when the user
+     * select any row on the table. 
      */
     private final ListChangeListener<PacienteBean> selectorTablePaciente =
            new ListChangeListener<PacienteBean>() {
@@ -98,7 +98,7 @@ public class PacienteListadoController implements Initializable {
            };
     
     /**
-     * Ver backup para inverse.
+     * Set selected patient data on textfields.
      */
     private void ponerPacienteSeleccionado() {
         
@@ -115,6 +115,7 @@ public class PacienteListadoController implements Initializable {
     }
     
     /**
+     * Get selected patient data.
      * 
      * @return 
      */
@@ -134,7 +135,7 @@ public class PacienteListadoController implements Initializable {
     }
     
     /**
-     * 
+     * Ini patients table.
      */
     private void inicializarTablaPacientes() {
         
@@ -161,134 +162,12 @@ public class PacienteListadoController implements Initializable {
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 updateFilteredData();
             }
-            
         });
-        
     }
+    
     
     /**
-     * 
-     * @param evento
-     * @throws IOException 
-     */
-    @FXML
-    private void backToPaciente(ActionEvent evento) throws IOException {
-        Node node=(Node) evento.getSource();
-        Stage stage=(Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/com/cqr/fxml/Paciente.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-    
-    @FXML
-    private void eliminarPacSeleccionado(ActionEvent evento) throws IOException {
-        
-        if (codigoPacSel.equalsIgnoreCase("") || codigoPacSel == null) {
-            
-            Dialogs.create().owner(null)
-                    .title("Error al eliminar paciente.")
-                    .masthead(null)
-                    .message( "Debe seleccionar un paciente para eliminarlo.")
-                    .showWarning();
-            
-        } else {
-            
-            //Eliminar desde el xml
-            IXMLParserPaciente xmlPC = new XMLParserPaciente();
-        
-            if (xmlPC.deletePaciente(codigoPacSel)) {
-            
-                Dialogs.create().owner(null)
-                        .title("Paciente eliminado")
-                        .masthead(null)
-                        .message( "Paciente eliminado correctamente.")
-                        .showInformation();
-
-                // Eliminar de la tabla.
-                pacienteObservable.remove(posicionPacienteEnTabla);
-                txtNrohistoriaApellido.setText("");
-                btnEliminarPacSeleccionado.setDisable(true);
-                
-            } else {
-                Dialogs.create().owner(null)
-                    .title("Error.")
-                    .masthead(null)
-                    .message( "Error al eliminar al paciente. Vuelva a intentarlo nuevamente.")
-                    .showWarning();
-            }
-        }
-        
-    }
-    
-    /**
-     * 
-     * @param evento
-     * @throws IOException 
-     */
-    @FXML
-    private void exportarExcel(ActionEvent evento) throws IOException, WriteException {
-        
-        //pacientes
-        WriteExcel writeExcel = new WriteExcel(arregloPacientes);
-        writeExcel.setOutputFile(Constants.XLS_PACIENTES);
-        
-        if (writeExcel.write()) {
-            
-            OSValidator osValidator = new OSValidator();
-            String os = osValidator.getOs().trim();
-            
-            Util util = new Util();
-            
-            File source = new File(Constants.XLS_PACIENTES);
-            File dest = null;
-            
-            String language = Locale.getDefault().getLanguage();
-            String escritorio = "Escritorio";
-            
-            if (language.equalsIgnoreCase("en") || language.equalsIgnoreCase("EN")) {
-                    escritorio = "Desktop";
-            }
-            
-            if (os.equalsIgnoreCase("windows")){
-                
-                dest = new File(System.getProperty("user.home") + File.separator + escritorio + File.separator + "Pacientes.xls");
-                
-            } else if (os.equalsIgnoreCase("mac")) {
-                
-                dest = new File(System.getProperty("user.home") + File.separator + escritorio + File.separator + "Pacientes.xls");
-                
-            }
-            
-            Path p = Paths.get(System.getProperty("user.home") + File.separator + escritorio + File.separator + "Pacientes.xls");
-            
-            try {
-                Files.deleteIfExists(p);
-                
-            } catch (IOException x) {
-                
-            }
-            
-            util.copyFileUsingJava7Files(source, dest);
-            
-            Dialogs.create().owner(null)
-                .title("El documento se creo correctamente")
-                .masthead(null)
-                .message( "El documento se creo correctamente y esta localizado en el escritorio.")
-                .showInformation();
-            
-        } else {
-            
-            Dialogs.create().owner(null)
-                .title("Error al exportar datos")
-                .masthead(null)
-                .message( "Hubo un error al exportar los datos. Intentalo nuevamente.")
-                .showInformation();
-        }
-        
-    }
-    
-    /**
+     * Copying files.
      * 
      * @param source
      * @param dest
@@ -357,7 +236,7 @@ public class PacienteListadoController implements Initializable {
     }    
     
     /**
-     * 
+     * Update filtered data.
      */
     private void updateFilteredData() {
         filteredData.clear();
@@ -371,6 +250,7 @@ public class PacienteListadoController implements Initializable {
     }
     
     /**
+     * Matches filter.
      * 
      * @param person
      * @return 
@@ -393,9 +273,144 @@ public class PacienteListadoController implements Initializable {
         return false; // Does not match
     }
     
+    /**
+     * Reaply table sort order.
+     */
     private void reapplyTableSortOrder() {
         tblPaciente.getSortOrder().addAll(clnApellido);
     }
     
+    // FXML Methods.
+    
+    /**
+     * Return to Patient main GUI.
+     * 
+     * @param evento
+     * @throws IOException 
+     */
+    @FXML
+    private void backToPaciente(ActionEvent evento) throws IOException {
+        Node node=(Node) evento.getSource();
+        Stage stage=(Stage) node.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/com/cqr/fxml/Paciente.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    /**
+     * Delete selected patient.
+     * 
+     * @param evento
+     * @throws IOException 
+     */
+    @FXML
+    private void eliminarPacSeleccionado(ActionEvent evento) throws IOException {
+        
+        if (codigoPacSel.equalsIgnoreCase("") || codigoPacSel == null) {
+            
+            Dialogs.create().owner(null)
+                    .title("Error al eliminar paciente.")
+                    .masthead(null)
+                    .message( "Debe seleccionar un paciente para eliminarlo.")
+                    .showWarning();
+            
+        } else {
+            
+            // Delete from XML file.
+            IXMLParserPaciente xmlPC = new XMLParserPaciente();
+        
+            // Validate if the patient was succesfully dropped.    
+            if (xmlPC.deletePaciente(codigoPacSel)) {
+            
+                Dialogs.create().owner(null)
+                        .title("Paciente eliminado")
+                        .masthead(null)
+                        .message( "Paciente eliminado correctamente.")
+                        .showInformation();
+
+                // Delete record from the table (GUI)
+                pacienteObservable.remove(posicionPacienteEnTabla);
+                txtNrohistoriaApellido.setText("");
+                btnEliminarPacSeleccionado.setDisable(true);
+                
+            } else {
+                
+                // Show message error 
+                Dialogs.create().owner(null)
+                    .title("Error.")
+                    .masthead(null)
+                    .message( "Error al eliminar al paciente. Vuelva a intentarlo nuevamente.")
+                    .showWarning();
+            }
+        }
+    }
+    
+    /**
+     * Export data to Excel or write an excel file.
+     * 
+     * @param evento
+     * @throws IOException 
+     */
+    @FXML
+    private void exportarExcel(ActionEvent evento) throws IOException, WriteException {
+        
+        // Patients
+        WriteExcel writeExcel = new WriteExcel(arregloPacientes);
+        writeExcel.setOutputFile(Constants.XLS_PACIENTES);
+        
+        if (writeExcel.write()) {
+            
+            OSValidator osValidator = new OSValidator();
+            String os = osValidator.getOs().trim();
+            
+            Util util = new Util();
+            
+            File source = new File(Constants.XLS_PACIENTES);
+            File dest = null;
+            
+            String language = Locale.getDefault().getLanguage();
+            String escritorio = "Escritorio";
+            
+            if (language.equalsIgnoreCase("en") || language.equalsIgnoreCase("EN")) {
+                    escritorio = "Desktop";
+            }
+            
+            // Check OS.
+            if (os.equalsIgnoreCase("windows")){
+                
+                dest = new File(System.getProperty("user.home") + File.separator + escritorio + File.separator + "Pacientes.xls");
+                
+            } else if (os.equalsIgnoreCase("mac")) {
+                
+                dest = new File(System.getProperty("user.home") + File.separator + escritorio + File.separator + "Pacientes.xls");
+                
+            }
+            
+            Path p = Paths.get(System.getProperty("user.home") + File.separator + escritorio + File.separator + "Pacientes.xls");
+            
+            try {
+                Files.deleteIfExists(p);
+            } catch (IOException x) {
+            }
+            
+            util.copyFileUsingJava7Files(source, dest);
+            
+            // Successfully message.
+            Dialogs.create().owner(null)
+                .title("El documento se creo correctamente")
+                .masthead(null)
+                .message( "El documento se creo correctamente y esta localizado en el escritorio.")
+                .showInformation();
+            
+        } else {
+            
+            Dialogs.create().owner(null)
+                .title("Error al exportar datos")
+                .masthead(null)
+                .message( "Hubo un error al exportar los datos. Intentalo nuevamente.")
+                .showInformation();
+        }
+    }
 }
 
