@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This is a software created by me, If you have any question about this project
+ * just ask or make a pull request for this project.
+ * 
+ * @author Ricardo Gonzales [js.ricardo.gonzales@gmail.com]
  */
 
 package com.cqr.controller;
@@ -43,22 +44,21 @@ import org.controlsfx.dialog.Dialogs;
 /**
  * FXML Controller class
  *
- * @author ricardogonzales
+ * @class 
  */
 public class EmailingPacSelecController implements Initializable {
     
+    // FXML variables.
     @FXML private TextField txtEnviar;
     @FXML private TextField txtAsunto;
     @FXML private TextArea taMensaje;
-    @FXML private Button btnRegresar;
     @FXML private Button btnEnviarEmail;
-    
     @FXML private TableView tblCorreos;
     @FXML private TableColumn clnPaciente;
     @FXML private TableColumn clnCorreo;
-    
     @FXML private TextField txtPara;
     
+    // Class variables.
     private ObservableList filteredData = FXCollections.observableArrayList();
     private ObservableList<PacienteBean> pacienteObservable = FXCollections.observableArrayList();
     private String listTextField = "";
@@ -72,7 +72,8 @@ public class EmailingPacSelecController implements Initializable {
     }
     
     /**
-     * 
+     * This is method is a listener that works when the user
+     * select any row on the table. 
      */
     private final ListChangeListener<PacienteBean> selectorTablePaciente =
             new ListChangeListener<PacienteBean>() {
@@ -84,7 +85,7 @@ public class EmailingPacSelecController implements Initializable {
     };
     
     /**
-     * 
+     * Set selected patient data on textfields.
      */
     private void ponerPacienteSeleccionado() {
         
@@ -93,16 +94,13 @@ public class EmailingPacSelecController implements Initializable {
         if (pacienteBean != null && (!pacienteBean.getCorreo().equalsIgnoreCase(""))) {
             
             listTextField += pacienteBean.getCorreo() + ",";
-            
             txtEnviar.setText(listTextField);
-            
             btnEnviarEmail.setDisable(false);
-            
         }
-        
     }
     
     /**
+     * Get selected patient data.
      * 
      * @return 
      */
@@ -120,7 +118,10 @@ public class EmailingPacSelecController implements Initializable {
         return null;
     }
     
+    // FXML Methods.
+    
     /**
+     * Return to main emailing GUI.
      * 
      * @param evento
      * @throws IOException 
@@ -136,6 +137,7 @@ public class EmailingPacSelecController implements Initializable {
     }
 
     /**
+     * Send emailing method.
      * 
      * @param evento
      * @throws IOException 
@@ -143,6 +145,7 @@ public class EmailingPacSelecController implements Initializable {
     @FXML
     public void enviarEmailing(ActionEvent evento) throws IOException {
         
+        // Validate data to send email.
         if (txtEnviar.getText().trim().equalsIgnoreCase("") ||
            taMensaje.getText().equalsIgnoreCase("") ) {
 
@@ -160,11 +163,10 @@ public class EmailingPacSelecController implements Initializable {
 
                 UtilEmail utilEmail = new UtilEmail();
 
-                /**
-                * Enviar email.
-                */
+                // Send email
                 BeanMail beanMail = new BeanMail();
-
+                
+                // Set mandatories values for emaling process.
                 beanMail.setUsuario(Constants.SENDER_EMAIL);
                 beanMail.setPassword(Constants.SENDER_PWD);
                 beanMail.setServidor(Constants.SERVER_GMAIL);
@@ -182,8 +184,10 @@ public class EmailingPacSelecController implements Initializable {
                 beanMail.setCuerpoMensaje(taMensaje.getText());
                 beanMail.setCopia(1);
 
+                // Validate if email was succesfully sended.
                 if (utilEmail.enviarEmailHtmlAdjunto(beanMail, true, emailList)) {
 
+                    // Show succesfully message.
                     Dialogs.create().owner(null)
                     .title("Emailing")
                     .masthead(null)
@@ -194,6 +198,7 @@ public class EmailingPacSelecController implements Initializable {
 
                 } else {
 
+                    // Show error message.
                     Dialogs.create().owner(null)
                     .title("Error al enviar.")
                     .masthead(null)
@@ -202,15 +207,18 @@ public class EmailingPacSelecController implements Initializable {
 
                 }
 
+                // Cleaning up the textfields.
                 txtAsunto.setText("");
                 taMensaje.setText(""); 
                 txtEnviar.setText("");
-
                 txtPara.setText("");
+                
+                // Set items behavior.
                 btnEnviarEmail.setDisable(true);
 
             } else {
 
+                // Show for incomplete data.
                 Dialogs.create().owner(null)
                     .title("Data incompleta.")
                     .masthead(null)
@@ -227,7 +235,7 @@ public class EmailingPacSelecController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        // TODO
+        // Ini
         this.inicializarTablaPacientes();
         
         final ObservableList<PacienteBean> tablaPacienteSel =
@@ -240,22 +248,21 @@ public class EmailingPacSelecController implements Initializable {
         try {
             
             List<PacienteBean> arregloPacientes = new ArrayList();
-            
             arregloPacientes = xmlParser.readXMLPacientes();
             
             for (int i=0; i<arregloPacientes.size(); i++) {
                 
                 if (!arregloPacientes.get(i).getCorreo().trim().equalsIgnoreCase("")) {
                     PacienteBean pacienteTable = new PacienteBean();
-                
                     pacienteTable.setNombre(arregloPacientes.get(i).getNombre() + " " + arregloPacientes.get(i).getApellido());
                     pacienteTable.setCorreo(arregloPacientes.get(i).getCorreo());
-
                     pacienteObservable.add(pacienteTable);
                 }
             }
             
             filteredData.addAll(pacienteObservable);
+            
+            // Add listener to list.
             pacienteObservable.addListener(new ListChangeListener() {
 
                 @Override
@@ -268,21 +275,27 @@ public class EmailingPacSelecController implements Initializable {
             e.printStackTrace();
         }
         
+        // Set items behavior.
         btnEnviarEmail.setDisable(true);
     }    
     
     /**
+     * Format the list of emails. 
+     * Example: "someperson@mail.com, anotherperson@mail.com"
      * 
-     * @return 
+     * @return items.
      */
     private List<String> getArrayEmail() {
         
-        List<String> items = Arrays.asList(txtEnviar.getText().trim().substring(0,txtEnviar.getText().trim().length()-1).split("\\s*,\\s*"));
+        List<String> items = Arrays.asList(
+                txtEnviar.getText().trim().
+                        substring(0,txtEnviar.getText().trim().length()-1).
+                        split("\\s*,\\s*"));
         return items;
     }
     
     /**
-     * 
+     * Ini patients table.
      */
     private void inicializarTablaPacientes() {
         
@@ -302,7 +315,7 @@ public class EmailingPacSelecController implements Initializable {
     }
     
     /**
-     * 
+     * Filtered data
      */
     private void updateFilteredData() {
         
@@ -342,12 +355,10 @@ public class EmailingPacSelecController implements Initializable {
     }
     
     /**
-     * 
+     * Sort rows on table by email.
      */
     private void reapplyTableSortOrder() {
         tblCorreos.getSortOrder().addAll(clnCorreo);
     }
-    
-    
 }
 
